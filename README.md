@@ -52,3 +52,4 @@ export default tseslint.config({
 # services-fe
 # zaroorat-fe
 # zaroorat-fe
+# zaroorat-fe
