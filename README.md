@@ -51,3 +51,4 @@ export default tseslint.config({
 # police-fe
 # services-fe
 # zaroorat-fe
+# zaroorat-fe
