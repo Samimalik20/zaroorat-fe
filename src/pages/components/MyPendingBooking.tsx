@@ -7,37 +7,23 @@ import {
   Title,
   ActionIcon,
   Menu,
-  Button,
   Modal,
-  TextInput,
 } from "@mantine/core";
 import IconDots from "../../assets/icons/IconDots";
 import { useDisclosure } from "@mantine/hooks";
 import useGetBookings from "../../hooks/useGetBookings";
-import { useForm } from "@mantine/form";
-import { useMutation } from "@tanstack/react-query";
-import http from "../../http";
 import { useState } from "react";
-import { notifications } from "@mantine/notifications";
-import { BookingCard } from "../components/BookingCard";
 import { Booking } from "../../http/Api";
+import { BookingCard } from "./BookingCard";
 
-export default function ServicesRequests() {
-  const [bookingId, setBookingId] = useState<string>("");
+export default function MyPendingBookings() {
   const [booking, setBooking] = useState<Booking | undefined>(undefined);
 
   const { bookings } = useGetBookings();
-  const [opened, { open, close }] = useDisclosure();
   const [openedDetails, { open: openDetails, close: closeDetails }] =
     useDisclosure();
 
   console.log(bookings);
-
-  const form = useForm({
-    initialValues: {
-      professionalId: "",
-    },
-  });
 
   const rows = bookings?.map((b, ind) => (
     <Table.Tr key={ind}>
@@ -69,23 +55,11 @@ export default function ServicesRequests() {
             <Menu.Item onClick={() => handleOpenDetailsModal(b)}>
               Show Details
             </Menu.Item>
-            <Menu.Item onClick={() => handleOpenModal(b._id)}>
-              Approve
-            </Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </Table.Td>
     </Table.Tr>
   ));
-
-  const handleOpenModal = (id: string) => {
-    setBookingId(id);
-    open();
-  };
-  const handleCloseModal = () => {
-    setBookingId("");
-    close();
-  };
 
   const handleOpenDetailsModal = (booking: Booking) => {
     setBooking(booking);
@@ -95,31 +69,11 @@ export default function ServicesRequests() {
     setBooking(undefined);
     closeDetails();
   };
-
-  const { mutate: patchProfessional, isPending: loadingUpdate } = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) =>
-      http.bookings.bookingControllerUpdateProfessional(id, data),
-    onSuccess: () => {
-      notifications.show({
-        message: "Service details sent to the professional",
-      });
-      handleCloseModal();
-    },
-  });
-
-  const handleSubmit = () => {
-    patchProfessional({
-      id: bookingId,
-      data: {
-        professionalId: form.values.professionalId,
-      },
-    });
-  };
   return (
     <>
       <Container fluid>
         <Stack>
-          <Title order={2}>Services Requests</Title>
+       
           <ScrollArea>
             <Table
               striped
@@ -143,7 +97,8 @@ export default function ServicesRequests() {
                   <Table.Th>Professional</Table.Th>
 
                   <Table.Th>Status</Table.Th>
-                  <Table.Th>Actions</Table.Th>
+                  <Table.Th>Action</Table.Th>
+
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>{rows}</Table.Tbody>
@@ -153,27 +108,10 @@ export default function ServicesRequests() {
       </Container>
 
       <Modal
-        opened={opened}
-        onClose={handleCloseModal}
-        title="Professional Key"
-        centered
+        opened={openedDetails}
+        onClose={handleCloseDetailsModal}
+        size={"lg"}
       >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack>
-            <TextInput
-              placeholder="Enter key of Professional "
-              required
-              {...form.getInputProps("professionalId")}
-            />
-
-            <Button type="submit" loading={loadingUpdate}>
-              Submit
-            </Button>
-          </Stack>
-        </form>
-      </Modal>
-
-      <Modal opened={openedDetails} onClose={handleCloseDetailsModal} size={'lg'}>
         <BookingCard booking={booking} />
       </Modal>
     </>

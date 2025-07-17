@@ -18,7 +18,7 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { CityManagerForm } from "../components/DistrictOfficerForm";
+import { CityManagerForm } from "../components/CityManagerForm";
 import IconMail from "../../assets/icons/IconMail";
 import IconPhone from "../../assets/icons/IconPhone";
 import IconDots from "../../assets/icons/IconDots";
@@ -169,7 +169,7 @@ export default function CityManagers() {
                       <ThemeIcon color="teal" variant="light" size={28}>
                         <IconPhone size={18} />
                       </ThemeIcon>
-                      <Text>{officer?.phone}</Text>
+                      <Text>+92{officer?.phone}</Text>
                     </Group>
                     <Group>
                       <ThemeIcon color="green" variant="light" size={28}>

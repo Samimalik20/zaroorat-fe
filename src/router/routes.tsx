@@ -14,15 +14,28 @@ import LandingPage from "../pages/components/LandingPage";
 import { Settings } from "../pages/settings/Settings";
 import CityDetails from "../pages/components/CityDetail";
 import ElectricianServices from "../pages/components/ElectricianServices";
-import WallPaperServices from "../pages/components/WallPanels";
 import RoleGuard from "../guards/RoleGuard";
 import { Role } from "../interfaces/ICommonIconProps";
 import CityManagers from "../pages/dashboard/CityManagers";
 import Services from "../pages/dashboard/Services";
 import CitySalesPerson from "../pages/dashboard/CitySalesPersons";
-import Professionals from "../pages/dashboard/Professionals";
 import ServicesRequests from "../pages/dashboard/ServicesRequests";
-import Practice from "../pages/components/Practice";
+import ACServices from "../pages/components/AC-Services";
+import PlumberServices from "../pages/components/PlumberService";
+import CarpenterServices from "../pages/components/CarpenterService";
+import HomeCleaningServices from "../pages/components/HomeCleaning";
+import PainterServices from "../pages/components/PaintingService";
+import MyAccount from "../pages/components/MyAccount";
+import Bookings from "../pages/components/MyBookings";
+import MyJobs from "../pages/components/MyJobs";
+import ProfessionalOnboarding from "../pages/components/ProfessionalOnboarding";
+import ForeignJobOnboarding from "../pages/components/ForeignJobApplication";
+import JobIndexing from "../pages/components/JobIndexing";
+import JobPostForm from "../pages/components/JobForm";
+import JobManagement from "../pages/components/JobManagement";
+import CityProfessionals from "../pages/dashboard/CityProfessionals";
+import Professionals from "../pages/dashboard/Professionals";
+import SalesPersons from "../pages/dashboard/SalesPersons";
 
 const routes = createBrowserRouter([
   {
@@ -30,7 +43,7 @@ const routes = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path: "/city",
+    path: "/city/:cityId",
     element: <CityDetails />,
   },
   {
@@ -39,12 +52,37 @@ const routes = createBrowserRouter([
   },
   {
     path: "/ac-services",
-    element: <Practice />,
+    element: <ACServices />,
   },
   {
-    path: "/wallpanel-services",
-    element: <WallPaperServices />,
+    path: "/plumber-services",
+    element: <PlumberServices />,
   },
+  {
+    path: "/carpenter-services",
+    element: <CarpenterServices />,
+  },
+  {
+    path: "/cleaning-services",
+    element: <HomeCleaningServices />,
+  },
+  {
+    path: "/painting-services",
+    element: <PainterServices />,
+  },
+  {
+    path: "/professional-onboarding",
+    element: <ProfessionalOnboarding />,
+  },
+  {
+    path: "/job-application",
+    element: <ForeignJobOnboarding />,
+  },
+  {
+    path: "/job-indexing",
+    element: <JobIndexing />,
+  },
+
   {
     path: "/auth",
     element: <AuthLayout />,
@@ -104,6 +142,22 @@ const routes = createBrowserRouter([
             ),
           },
           {
+            path: "jobs",
+            element: (
+              <RoleGuard allowedRoles={[Role.ADMIN]}>
+                <JobManagement />
+              </RoleGuard>
+            ),
+          },
+          {
+            path: "job-form",
+            element: (
+              <RoleGuard allowedRoles={[Role.ADMIN]}>
+                <JobPostForm />
+              </RoleGuard>
+            ),
+          },
+          {
             path: "services",
             element: (
               <RoleGuard allowedRoles={[Role.ADMIN, Role.CITY_MANAGER]}>
@@ -119,19 +173,42 @@ const routes = createBrowserRouter([
               </RoleGuard>
             ),
           },
-          // {
-          //   path: "salesmans",
-          //   element: <SalesMan />,
-          // },
-          {
-            path: "city-salemans",
-            element: <CitySalesPerson />,
-          },
           {
             path: "professionals",
             element: <Professionals />,
           },
+          {
+            path: "city-salesmans",
+            element: <CitySalesPerson />,
+          },
+          {
+            path: "salesmans",
+            element: <SalesPersons />,
+          },
+          {
+            path: "city-professionals",
+            element: <CityProfessionals />,
+          },
         ],
+      },
+    ],
+  },
+
+  {
+    path: "/account",
+    element: <MyAccount />,
+    children: [
+      {
+        path: "bookings",
+        element: <Bookings />,
+      },
+      {
+        path: "my-jobs",
+        element: <MyJobs />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },

@@ -6,6 +6,7 @@ import {
   Group,
   Text,
   Button,
+  Stack,
 } from "@mantine/core";
 
 import { useMediaQuery } from "@mantine/hooks";
@@ -31,12 +32,27 @@ function AuthLayout() {
           display={isSmallScreen ? "none" : "block"}
         >
           <Center h={"100%"} w={"100%"}>
+            <Stack gap={0} align="center">
+
+
+            <Image
+            w={'70%'}
+              src={
+                "https://ik.imagekit.io/yzrrrgg3d/professional/horizontal-removebg-preview.png?updatedAt=1749903689213"
+              }
+              style={{
+                cursor:"pointer"
+              }}
+              onClick={()=>navigate('/')}
+            />
             <Image
             w={'70%'}
               src={
                 "https://ik.imagekit.io/yzrrrgg3d/professional/Construction%20worker-amico.png?updatedAt=1748793075244"
               }
             />
+            </Stack>
+
           </Center>
         </Grid.Col>
         <Grid.Col

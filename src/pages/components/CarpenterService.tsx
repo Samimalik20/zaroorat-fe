@@ -16,56 +16,56 @@ import MyNavbar from "../auth/Navbar";
 import BookingForm from "./BookingForm";
 import { useParams } from "react-router-dom";
 
-const cardData = [
+const carpenterCardData = [
   {
-    title: "AC Installation & Setup",
+    title: "Custom Furniture Making",
     description:
-      "Professional installation of split, window, or central AC systems with optimal placement and energy efficiency in mind.",
-    image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/air_conditioner8-removebg-preview.png?updatedAt=1749621143129",
+      "Design and build custom furniture pieces like tables, wardrobes, beds, and cabinets tailored to your space and style.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/272-removebg-preview.png?updatedAt=1749625004058",
-
-    bg: "#e3f2fd",
-    buttonColor: "dark",
+      "https://ik.imagekit.io/yzrrrgg3d/carpenter/furniture1.png?updatedAt=1750181000000",
+    image2:
+      "https://ik.imagekit.io/yzrrrgg3d/carpenter/furniture2.png?updatedAt=1750181000000",
+    bg: "#fbe9e7", // warm light brown
+    color: "black",
+    buttonColor: "orange",
   },
   {
-    title: "AC Repair & Troubleshooting",
+    title: "Wooden Door & Window Repair",
     description:
-      "Expert diagnosis and repair of cooling issues, unusual noises, refrigerant leaks, or electrical faults to keep your AC running smoothly.",
+      "Repair or replace creaky, broken, or damaged wooden doors and windows for a smooth, secure, and aesthetic finish.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/20944212-removebg-preview.png?updatedAt=1749621389364",
+      "https://ik.imagekit.io/yzrrrgg3d/carpenter/door-repair1.png?updatedAt=1750181000000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/4373395-removebg-preview.png?updatedAt=1749624809652", // replace with a relevant repair image if you have one
-    bg: "#b3e5fc",
-    buttonColor: "blue",
+      "https://ik.imagekit.io/yzrrrgg3d/carpenter/door-repair2.png?updatedAt=1750181000000",
+    bg: "#ffe0b2", // light amber
+    color: "black",
+    buttonColor: "brown",
   },
   {
-    title: "AC Servicing & Maintenance",
+    title: "Polishing & Wood Maintenance",
     description:
-      "Routine cleaning, filter replacement, and performance checks to extend the life of your AC and maintain indoor air quality.",
+      "Bring old wooden surfaces back to life with expert polishing, termite-proofing, and varnishing for long-lasting beauty.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/Sandy_Tech-18_Single-01-removebg-preview.png?updatedAt=1749621520919",
+      "https://ik.imagekit.io/yzrrrgg3d/carpenter/polishing1.png?updatedAt=1750181000000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/7274224-removebg-preview.png?updatedAt=1749625569299", // replace with a maintenance image
-    bg: "#263238",
+      "https://ik.imagekit.io/yzrrrgg3d/carpenter/polishing2.png?updatedAt=1750181000000",
+    bg: "#3e2723", // deep wood color
     color: "white",
     buttonColor: "gray",
   },
 ];
 
-export default function ACServices() {
- 
+export default function CarpenterServices() {
+  const { cityId } = useParams();
+  if (!cityId) return null;
 
   return (
     <>
       <MyNavbar />
       <Box pos="relative">
         <Image
-          src={
-            "https://thumbs.dreamstime.com/b/blue-couch-sitting-living-room-next-to-wall-modern-pink-pillows-white-mounted-air-conditioner-potted-plant-curtains-360379990.jpg?w=768"
-          }
-          alt="AC Services"
+          src="https://img.freepik.com/free-photo/carpenter-working-sawmill-wood-manufacture_1303-22878.jpg?uid=R104849183&ga=GA1.1.1955131269.1747397312&semt=ais_hybrid&w=740"
+          alt="Carpenter Services"
           radius={0}
           fit="cover"
           h={650}
@@ -80,15 +80,10 @@ export default function ACServices() {
           style={{ zIndex: 2 }}
         >
           <Stack>
-            <Title
-              order={3}
-              style={{
-                fontFamily: "serif",
-              }}
-            >
+            <Title order={3} style={{ fontFamily: "serif" }}>
               Book a Service
             </Title>
-            <BookingForm  isHeader={true} type="AC Technician" />
+            <BookingForm city={cityId} isHeader={true} type="Carpenter" />
           </Stack>
         </Card>
         <Box
@@ -97,22 +92,22 @@ export default function ACServices() {
           left="10%"
           style={{ transform: "translateY(-50%)", zIndex: 2, color: "white" }}
         >
-          <Title order={1}>Professional AC Services</Title>
+          <Title order={1}>Professional Carpenter Services</Title>
           <Text size="md" mt="sm">
-            Keep your home cool and comfortable with our expert technicians.
+            From custom furniture to repairs – expert woodwork at your doorstep.
           </Text>
 
           <Group gap="md">
-            <Text size="lg">• Reliable</Text>
-            <Text size="lg">• Affordable</Text>
-            <Text size="lg">• 24/7 Support</Text>
+            <Text size="lg">• Skilled Artisans</Text>
+            <Text size="lg">• Quality Materials</Text>
+            <Text size="lg">• Affordable Pricing</Text>
           </Group>
         </Box>
       </Box>
 
       <Container py="md" fluid>
         <Stack gap="md">
-          {cardData.map((card, index) => (
+          {carpenterCardData.map((card, index) => (
             <Card
               key={index}
               p="lg"
@@ -146,7 +141,7 @@ export default function ACServices() {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Group>
-                    <Image w={300} src={card.image1} alt={card.title} />{" "}
+                    <Image w={300} src={card.image1} alt={card.title} />
                     <Image w={300} src={card.image2} alt={card.title} />
                   </Group>
                 </Grid.Col>

@@ -1,50 +1,82 @@
-
 import {
+  Box,
   Container,
   Group,
-  Burger,
-  Button,
   Text,
-  Paper,
-  useMantineColorScheme,
+
+  Divider,
+  Stack,
+  Anchor,
+  Center,
+  Flex,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import IconBrandFacebook from '../../assets/icons/IconBrandFacebook';
+import IconBrandInstagram from '../../assets/icons/IconBrandInstagram';
+import IconBrandTwitter from '../../assets/icons/IconBrandTwitter';
+import IconBrandWhatsapp from '../../assets/icons/IconBrandWhatsapp';
 
 
-export default function Footer() {
-  const [opened, { toggle }] = useDisclosure(false);
-  const { colorScheme } = useMantineColorScheme();
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Contact', href: '/contact' },
 
+];
+
+const Footer = () => {
   return (
-    <Paper
-      withBorder
-      px="md"
-      py="sm"
-      radius={0}
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        backdropFilter: 'blur(10px)',
-        background: colorScheme === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.6)',
-        borderBottom: '1px solid rgba(255,255,255,0.2)',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.2)',
-      }}
-    >
-      <Container size="xl" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Group gap="xs">
-          {/* <IconRocket size={24} /> */}
-          <Text fw={700} size="xl" style={{ letterSpacing: '1px' }}>
-            NeoNav
+    <Box bg="#2f9e44" color="white" pt="md">
+      <Container size="lg">
+        <Flex
+          justify="space-between"
+          wrap="wrap"
+          align="center"
+          py="md"
+          gap="md"
+        >
+          <Stack gap={4}>
+            <Text size="lg" fw={600} c={'white'}>
+              Quick Links
+            </Text>
+            {navLinks.map((link) => (
+              <Anchor key={link.href} href={link.href} c="white">
+                {link.label}
+              </Anchor>
+            ))}
+          </Stack>
+
+          <Stack gap="xs" align="center">
+            <Text size="lg" fw={600} c={'white'}>
+              Follow Us
+            </Text>
+            <Group gap="xs">
+              <Anchor href="https://facebook.com" target="_blank" color="white">
+                <IconBrandFacebook size={20} color='white'/>
+              </Anchor>
+              <Anchor href="https://instagram.com" target="_blank" color="white">
+                <IconBrandInstagram size={20} color='white'/>
+              </Anchor>
+              <Anchor href="https://twitter.com" target="_blank" color="white">
+                <IconBrandTwitter size={20} color='white'/>
+              </Anchor>
+              <Anchor href="https://linkedin.com" target="_blank" color="white">
+                <IconBrandWhatsapp size={20} color='white'/>
+              </Anchor>
+            </Group>
+          </Stack>
+        </Flex>
+
+        <Divider color="white" my="sm" />
+
+        <Center py="sm">
+          <Text size="sm" color="white">
+            © {new Date().getFullYear()} Zaroorat. All rights reserved.
           </Text>
-        </Group>
-        <Group gap="xs" visibleFrom="sm">
-          <Button variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} radius="xl">
-            Sign In
-          </Button>
-        </Group>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" />
+        </Center>
       </Container>
-    </Paper>
+    </Box>
   );
-}
+};
+
+export default Footer;

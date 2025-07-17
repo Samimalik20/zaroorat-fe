@@ -1,5 +1,5 @@
 {
-  "name": "punjab-police",
+  "name": "zaroorat-fe",
   "private": true,
   "version": "0.0.5",
   "type": "module",
@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-"sync:api": "npx swagger-typescript-api generate -p http://localhost:3000/api-json -o src/http --axios"
-
+    "sync:api": "npx swagger-typescript-api generate -p http://localhost:3000/api-json -o src/http --axios"
   },
   "dependencies": {
     "@mantine/core": "^8.0.2",
@@ -22,6 +21,7 @@
     "@tanstack/react-query-devtools": "^5.80.2",
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
+    "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",

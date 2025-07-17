@@ -20,7 +20,7 @@ import {
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { showNotification } from "@mantine/notifications";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Professional } from "../../http/Api";
 import { useDisclosure } from "@mantine/hooks";
@@ -30,11 +30,14 @@ import IconPencilOutlined from "../../assets/icons/IconPencilOutlined";
 import IconTrashOutlined from "../../assets/icons/IconTrashOutlined";
 import IconMapPin from "../../assets/icons/IconMapPin";
 import IconPhone from "../../assets/icons/IconPhone";
+import useGetCityOfficer from "../../hooks/useGeCityOfficer";
 import ProfessionalForm from "../components/ProfessionalForm";
 import useGetProfessionals from "../../hooks/useGetProfessionals";
 import IconPin from "../../assets/icons/IconPin";
+import useGetSalesPersonWithUser from "../../hooks/useGetSalesPerson";
 
-export default function Professionals() {
+export default function CityProfessionals() {
+
   const { user } = useAuth();
 
   if (!user || !user._id) {
@@ -49,6 +52,19 @@ export default function Professionals() {
     );
   }
 
+
+const { cityOfficer } = useGetCityOfficer(user?._id);
+const { salesman } = useGetSalesPersonWithUser(user?._id);
+
+const city = React.useMemo(() => {
+  if (cityOfficer?.city) return cityOfficer.city;
+  if (salesman?.city) return salesman.city;
+  return "";
+}, [cityOfficer, salesman]);
+console.log(city,'city')
+const {  professionals, isLoading: isProfessionalLoading } = useGetProfessionals(city);
+
+
   const [professional, setSelectedProfessional] = useState<
     Professional | undefined
   >(undefined);
@@ -56,8 +72,8 @@ export default function Professionals() {
   const [address, setAddress] = useState<string>("");
   const [profession, setProfession] = useState<string | null>(null);
 
-  const { isLoading: isProfessionalLoading, professionals } =
-    useGetProfessionals("", address, profession);
+  // const { isLoading: isProfessionalLoading, professionals } =
+  //   useGetProfessionals(cityOfficer?.city || "", address, profession);
 
   const [opened, { open, close }] = useDisclosure();
 
@@ -219,7 +235,7 @@ export default function Professionals() {
                             </Text>
                           </Group>
                         )}
-                        {salesman.address && (
+                         {salesman.address && (
                           <div
                             style={{
                               display: "flex",
@@ -258,6 +274,7 @@ export default function Professionals() {
         <ProfessionalForm
           onClose={close}
           recruiter={professional}
+          district={city}
           isProfessional={false}
         />
       </Modal>

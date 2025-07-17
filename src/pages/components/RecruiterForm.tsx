@@ -25,7 +25,6 @@ function RecruiterForm({
       email: recruiter?.user?.email || "",
       city: district || recruiter?.city,
       phone: recruiter?.phone || "",
-
       gender: recruiter?.gender || "",
     },
   });
@@ -79,12 +78,19 @@ function RecruiterForm({
           disabled={recruiter ? true : false}
           {...form.getInputProps("email")}
         />
-        <TextInput
+        <Select
           label="City"
           placeholder="Select City"
           withAsterisk
           value={district}
-          disabled
+         data={[
+            "Multan",
+            "Lahore",
+            "Karachi",
+            "Islamabad",
+            "Faisalabad",
+            "Rawalpindi",
+          ]}
           {...form.getInputProps("city")}
         />
         <TextInput

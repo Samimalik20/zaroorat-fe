@@ -16,61 +16,60 @@ import MyNavbar from "../auth/Navbar";
 import BookingForm from "./BookingForm";
 import { useParams } from "react-router-dom";
 
-const cardData = [
+const cleaningCardData = [
   {
-    title: "AC Installation & Setup",
+    title: "General Home Cleaning",
     description:
-      "Professional installation of split, window, or central AC systems with optimal placement and energy efficiency in mind.",
-    image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/air_conditioner8-removebg-preview.png?updatedAt=1749621143129",
+      "Thorough dusting, mopping, and vacuuming to maintain a hygienic and fresh living space.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/272-removebg-preview.png?updatedAt=1749625004058",
-
-    bg: "#e3f2fd",
-    buttonColor: "dark",
+      "https://ik.imagekit.io/yzrrrgg3d/cleaning/general-cleaning1.png?updatedAt=1750181200000",
+    image2:
+      "https://ik.imagekit.io/yzrrrgg3d/cleaning/general-cleaning2.png?updatedAt=1750181200000",
+    bg: "#e8f5e9", // light green
+    color: "black",
+    buttonColor: "green",
   },
   {
-    title: "AC Repair & Troubleshooting",
+    title: "Kitchen & Bathroom Deep Clean",
     description:
-      "Expert diagnosis and repair of cooling issues, unusual noises, refrigerant leaks, or electrical faults to keep your AC running smoothly.",
+      "Deep sanitization of sinks, cabinets, tiles, and appliances for spotless kitchens and bathrooms.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/20944212-removebg-preview.png?updatedAt=1749621389364",
+      "https://ik.imagekit.io/yzrrrgg3d/cleaning/kitchen1.png?updatedAt=1750181200000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/4373395-removebg-preview.png?updatedAt=1749624809652", // replace with a relevant repair image if you have one
-    bg: "#b3e5fc",
-    buttonColor: "blue",
+      "https://ik.imagekit.io/yzrrrgg3d/cleaning/bathroom1.png?updatedAt=1750181200000",
+    bg: "#c8e6c9",
+    color: "black",
+    buttonColor: "teal",
   },
   {
-    title: "AC Servicing & Maintenance",
+    title: "Post-Construction & Move-In Cleaning",
     description:
-      "Routine cleaning, filter replacement, and performance checks to extend the life of your AC and maintain indoor air quality.",
+      "Remove debris, paint stains, and dust after renovation or before moving into a new house.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/Sandy_Tech-18_Single-01-removebg-preview.png?updatedAt=1749621520919",
+      "https://ik.imagekit.io/yzrrrgg3d/cleaning/post-construction1.png?updatedAt=1750181200000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/7274224-removebg-preview.png?updatedAt=1749625569299", // replace with a maintenance image
-    bg: "#263238",
+      "https://ik.imagekit.io/yzrrrgg3d/cleaning/movein1.png?updatedAt=1750181200000",
+    bg: "#1b5e20", // dark green
     color: "white",
     buttonColor: "gray",
   },
 ];
 
-export default function ACServices() {
- 
+export default function HomeCleaningServices() {
+
 
   return (
     <>
       <MyNavbar />
       <Box pos="relative">
         <Image
-          src={
-            "https://thumbs.dreamstime.com/b/blue-couch-sitting-living-room-next-to-wall-modern-pink-pillows-white-mounted-air-conditioner-potted-plant-curtains-360379990.jpg?w=768"
-          }
-          alt="AC Services"
+          src="https://img.freepik.com/free-photo/full-shot-men-cleaning-office_23-2149345516.jpg?uid=R104849183&ga=GA1.1.1955131269.1747397312&semt=ais_hybrid&w=740"
+          alt="Home Cleaning Services"
           radius={0}
           fit="cover"
           h={650}
         />
-        <Overlay color="#000" backgroundOpacity={0.8} blur={1} zIndex={1} />
+        <Overlay color="#000" backgroundOpacity={0.7} blur={1} zIndex={1} />
         <Card
           pos="absolute"
           top="5%"
@@ -80,15 +79,10 @@ export default function ACServices() {
           style={{ zIndex: 2 }}
         >
           <Stack>
-            <Title
-              order={3}
-              style={{
-                fontFamily: "serif",
-              }}
-            >
+            <Title order={3} style={{ fontFamily: "serif" }}>
               Book a Service
             </Title>
-            <BookingForm  isHeader={true} type="AC Technician" />
+            <BookingForm  isHeader={true} type="Home Cleaner" />
           </Stack>
         </Card>
         <Box
@@ -97,22 +91,22 @@ export default function ACServices() {
           left="10%"
           style={{ transform: "translateY(-50%)", zIndex: 2, color: "white" }}
         >
-          <Title order={1}>Professional AC Services</Title>
+          <Title order={1}>Professional Home Cleaning</Title>
           <Text size="md" mt="sm">
-            Keep your home cool and comfortable with our expert technicians.
+            Keep your home sparkling with our trained and trusted cleaners.
           </Text>
 
           <Group gap="md">
-            <Text size="lg">• Reliable</Text>
-            <Text size="lg">• Affordable</Text>
-            <Text size="lg">• 24/7 Support</Text>
+            <Text size="lg">• Eco-Friendly</Text>
+            <Text size="lg">• Time-Saving</Text>
+            <Text size="lg">• Trusted Staff</Text>
           </Group>
         </Box>
       </Box>
 
       <Container py="md" fluid>
         <Stack gap="md">
-          {cardData.map((card, index) => (
+          {cleaningCardData.map((card, index) => (
             <Card
               key={index}
               p="lg"
@@ -146,7 +140,7 @@ export default function ACServices() {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Group>
-                    <Image w={300} src={card.image1} alt={card.title} />{" "}
+                    <Image w={300} src={card.image1} alt={card.title} />
                     <Image w={300} src={card.image2} alt={card.title} />
                   </Group>
                 </Grid.Col>

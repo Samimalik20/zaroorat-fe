@@ -25,15 +25,18 @@ import { notifications } from "@mantine/notifications";
 
 export default function BookingForm({
   isHeader,
-  city,
+ 
+  type,
 }: {
   isHeader?: boolean;
-  city: string;
+
+  type: string;
 }) {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [recordingURL, setRecordingURL] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingLocation, setLoadingLocation] = useState(false);
 
   const inputRef = useRef<google.maps.places.SearchBox | null>(null);
   const resetRef = useRef<() => void>(null);
@@ -96,7 +99,9 @@ export default function BookingForm({
     formData.append("time", String(form.values.time || ""));
     formData.append("address", String(form.values.address || ""));
     formData.append("contact", String(form.values.contact || ""));
-    formData.append("city", city);
+    formData.append("city", 'Multan');
+    formData.append("type", type);
+
     if (user?._id) {
       formData.append("user", user._id);
     }
@@ -144,6 +149,48 @@ export default function BookingForm({
     }
   };
 
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    setLoadingLocation(true);
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        // Reverse geocoding using Google Maps API (assuming map is loaded)
+        const geocoder = new window.google.maps.Geocoder();
+        const latLng = { lat: latitude, lng: longitude };
+
+        geocoder.geocode({ location: latLng }, (results, status) => {
+          if (status === "OK" && results && results.length > 0) {
+            const address = results[0].formatted_address;
+
+            form.setFieldValue("address", address);
+            if (inputRef.current?.getBounds) {
+              const input = inputRef.current;
+              const inputElement = document.querySelector(
+                "input[name='address']"
+              );
+              if (inputElement) inputElement.value = address;
+            }
+          } else {
+            alert("Unable to retrieve address.");
+          }
+          setLoadingLocation(false);
+        });
+      },
+      (error) => {
+        alert("Failed to get your location.");
+        console.error(error);
+        setLoadingLocation(false);
+      }
+    );
+  };
+
   return (
     <>
       <Box p="xs" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
@@ -163,19 +210,30 @@ export default function BookingForm({
             />
 
             {isLoaded && (
-              <StandaloneSearchBox
-                onLoad={(ref: google.maps.places.SearchBox) => {
-                  inputRef.current = ref;
-                }}
-                onPlacesChanged={handlePlacesChanged}
-              >
-                <TextInput
-                  size={isHeader ? "sm" : "md"}
-                  label="Address"
-                  placeholder="Search Address"
-                  {...form.getInputProps("address")}
-                />
-              </StandaloneSearchBox>
+              <>
+             
+                <StandaloneSearchBox
+                  onLoad={(ref: google.maps.places.SearchBox) => {
+                    inputRef.current = ref;
+                  }}
+                  onPlacesChanged={handlePlacesChanged}
+                >
+                  <TextInput
+                    size={isHeader ? "sm" : "md"}
+                    label="Address"
+                    placeholder="Search Address"
+                    {...form.getInputProps("address")}
+                  />
+                </StandaloneSearchBox>
+                   <Button
+                  variant="light"
+                  onClick={handleUseCurrentLocation}
+                  loading={loadingLocation}
+                  size={isHeader ? "xs" : "sm"}
+                >
+                  Use Current Location
+                </Button>
+              </>
             )}
 
             <TextInput
@@ -219,7 +277,6 @@ export default function BookingForm({
                     )}
                   </FileButton>
 
-                  {/* ✅ Audio Recorder with callback */}
                   <AudioRecorder
                     onRecordingComplete={(url: string) => setRecordingURL(url)}
                   />
@@ -286,7 +343,9 @@ export default function BookingForm({
               </Card>
             )}
 
-            <Button type="submit" loading={loading}>Submit</Button>
+            <Button type="submit" loading={loading}>
+              Submit
+            </Button>
           </Stack>
         </form>
       </Box>

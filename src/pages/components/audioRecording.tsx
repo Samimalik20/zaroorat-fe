@@ -73,7 +73,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingComplete }) =>
   };
 
   const handleRecordingStop = () => {
-    const audioBlob = new Blob(audioChunksRef.current, { type: "audio/ webm" });
+    const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
     const url = URL.createObjectURL(audioBlob);
     setAudioURL(url);
     onRecordingComplete(url);

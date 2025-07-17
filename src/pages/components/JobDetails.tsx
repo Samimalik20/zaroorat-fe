@@ -1,178 +1,169 @@
 import {
-  Card,
   Text,
   Group,
   Stack,
+  
   Divider,
-  Box,
   ThemeIcon,
   SimpleGrid,
+  Badge,
 } from "@mantine/core";
-import IconUserFilled from "../../assets/icons/IconUserFilled";
-import IconBadge from "../../assets/icons/IconBadge";
-import RulerMeasure from "../../assets/icons/RulerMeasure";
-import IconBook from "../../assets/icons/IconBook";
+
+import IconMapPin from "../../assets/icons/IconMapPin";
 import IconCalendar from "../../assets/icons/IconCalendar";
-import IconRulerMeasureOutlined from "../../assets/icons/IconRulerMeasureOutlined";
-import IconRulerMeasure2 from "../../assets/icons/RulerMeasure";
+import IconBuilding from "../../assets/icons/IconBuilding";
+import IconCash from "../../assets/icons/IconCash";
 
-export function JobDetails({ job }: { job: any }) {
+export function JobCard({ job }: { job: any }) {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Stack gap="lg">
-        <Text size="xl" fw={700} ta="center" mb="sm">
-          {job.title}
+    <Stack gap="xl">
+      {/* 🔹 Basic Info Section */}
+      <Divider label="Job Overview" labelPosition="center" my="sm" />
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xs">
+         <Text size="sm">
+          <strong>Job Title:</strong> {job.jobTitle}
+        </Text>
+          <Text size="sm">
+          <strong>Category:</strong>{" "}
+          <Badge color="blue" variant="light">
+            {job.jobCategory}
+          </Badge>
         </Text>
 
-        <Text size="md" color="dimmed" style={{ whiteSpace: "pre-wrap" }}>
-          {job.description}
+        <Group gap="xs">
+          <ThemeIcon color="gray" size={24} variant="light">
+            <IconBuilding size={18} />
+          </ThemeIcon>
+          <Text size="sm">
+            <strong>Company:</strong> {job.companyName}
+          </Text>
+        </Group>
+
+        <Group gap="xs">
+          <ThemeIcon color="teal" size={24} variant="light">
+            <IconMapPin size={18} />
+          </ThemeIcon>
+          <Text size="sm">
+            <strong>Location:</strong> {job.city}, {job.country}
+          </Text>
+        </Group>
+
+       
+
+      
+        {job.salary?.amount && (
+          <Group gap="xs">
+            <ThemeIcon color="green" size={24} variant="light">
+              <IconCash size={18} />
+            </ThemeIcon>
+            <Text size="sm">
+              <strong>Salary:</strong> {job.salary.amount}{" "}
+              {job.salary.currency}
+            </Text>
+          </Group>
+        )}
+
+        {job.interviewDetails?.date && (
+          <Group gap="xs">
+            <ThemeIcon color="orange" size={24} variant="light">
+              <IconCalendar size={18} />
+            </ThemeIcon>
+            <Text size="sm">
+              <strong>Interview:</strong>{" "}
+              {new Date(job.interviewDetails.date).toLocaleDateString()}
+            </Text>
+          </Group>
+        )}
+      </SimpleGrid>
+
+      {/* 🔸 Skills & Responsibilities Section */}
+      <Divider label="Skills & Responsibilities" labelPosition="center" my="sm" />
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xs">
+        <Text size="sm">
+          <strong>Skills:</strong> {job.skillsRequired?.join(", ")}
         </Text>
+        <Text size="sm">
+          <strong>Responsibilities:</strong> {job.responsibilities?.join(", ")}
+        </Text>
+      </SimpleGrid>
 
-        <Divider label="Basic Info" my="md" />
+      {/* 🔸 Salary & Benefits Section */}
+      <Divider label="Salary & Benefits" labelPosition="center" my="sm" />
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xs">
+        <Text size="sm">
+          <strong>Salary:</strong> {job.salary.amount} {job.salary.currency}
+        </Text>
+        <Text size="sm">
+          <strong>Notes:</strong> {job.salary.notes}
+        </Text>
+        <Text size="sm">
+          <strong>Accommodation:</strong>{" "}
+          {job.benefits.accommodation ? "Yes" : "No"}
+        </Text>
+        <Text size="sm">
+          <strong>Food:</strong> {job.benefits.food ? "Yes" : "No"}
+        </Text>
+        <Text size="sm">
+          <strong>Transport:</strong> {job.benefits.transport ? "Yes" : "No"}
+        </Text>
+        <Text size="sm">
+          <strong>Medical:</strong> {job.benefits.medical ? "Yes" : "No"}
+        </Text>
+        {job.benefits.other?.length > 0 && (
+          <Text size="sm" span>
+            <strong>Other:</strong> {job.benefits.other.join(", ")}
+          </Text>
+        )}
+      </SimpleGrid>
 
-        <SimpleGrid cols={{
-          base: 1,
-          sm: 1,
-          md: 2,
-          lg: 3,
-          xl: 3,
-        }} spacing="md">
-          <Group gap={8}>
-            <ThemeIcon color="cyan" variant="light" size={28}>
-              <IconUserFilled size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Vacancies:</strong> {job.vacancies}
-            </Text>
-          </Group>
+      {/* 🔸 Contract & Interview Section */}
+      <Divider label="Contract & Interview" labelPosition="center" my="sm" />
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xs">
+        <Text size="sm">
+          <strong>Duration:</strong> {job.contractDetails.durationMonths} months
+        </Text>
+        <Text size="sm">
+          <strong>Working Days:</strong>{" "}
+          {job.contractDetails.workingDaysPerWeek} / week
+        </Text>
+        <Text size="sm">
+          <strong>Working Hours:</strong>{" "}
+          {job.contractDetails.workingHoursPerDay} / day
+        </Text>
+        <Text size="sm">
+          <strong>Overtime:</strong>{" "}
+          {job.contractDetails.overtimeAvailable ? "Available" : "Not available"}
+        </Text>
+        <Text size="sm">
+          <strong>Interview Mode:</strong> {job.interviewDetails.mode}
+        </Text>
+        <Text size="sm">
+          <strong>Location:</strong> {job.interviewDetails.location}
+        </Text>
+        <Text size="sm">
+          <strong>Notes:</strong> {job.interviewDetails.notes}
+        </Text>
+      </SimpleGrid>
 
-          <Group gap={8}>
-            <ThemeIcon color="teal" variant="light" size={28}>
-              <IconBadge size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>BPS:</strong> {job.bps}
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="grape" variant="light" size={28}>
-              <IconUserFilled size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Gender:</strong> {job.gender}
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="orange" variant="light" size={28}>
-              <IconUserFilled size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Age Range:</strong> {job.age_min} - {job.age_max}
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="yellow" variant="light" size={28}>
-              <IconRulerMeasure2 size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Height (Male):</strong> {job.height_male} cm
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="pink" variant="light" size={28}>
-              <IconRulerMeasure2 size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Height (Female):</strong> {job.height_female} cm
-            </Text>
-          </Group>
-
-          {job.chest_male && (
-            <Group gap={8}>
-              <ThemeIcon color="violet" variant="light" size={28}>
-                <IconRulerMeasureOutlined color="#000063" />
-              </ThemeIcon>
-              <Text>
-                <strong>Chest (Male):</strong> {job.chest_male}
-              </Text>
-            </Group>
-          )}
-
-          {job.chest_female && (
-            <Group gap={8}>
-              <ThemeIcon color="pink" variant="light" size={28}>
-                <RulerMeasure size={18} />
-              </ThemeIcon>
-              <Text>
-                <strong>Chest (Female):</strong> {job.chest_female}
-              </Text>
-            </Group>
-          )}
-
-          <Group gap={8}>
-            <ThemeIcon color="blue" variant="light" size={28}>
-              <IconBook size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Education:</strong> {job.education}
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="red" variant="light" size={28}>
-              <Text style={{ fontFamily: "cursive" }}>Rs</Text>
-            </ThemeIcon>
-            <Text>
-              <strong>Application Fee:</strong> PKR {job.application_fee}
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="green" variant="light" size={28}>
-              <IconCalendar size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Application Deadline:</strong>{" "}
-              {job.application_deadline
-                ? new Date(job.application_deadline).toLocaleDateString()
-                : "N/A"}
-            </Text>
-          </Group>
-
-          <Group gap={8}>
-            <ThemeIcon color="green" variant="light" size={28}>
-              <IconCalendar size={18} />
-            </ThemeIcon>
-            <Text>
-              <strong>Application Deadline:</strong>{" "}
-              {job.application_deadline
-                ? new Date(job.application_deadline).toLocaleDateString()
-                : "N/A"}
-            </Text>
-          </Group>
-        </SimpleGrid>
-
-        <Divider label="Terms & Conditions" my="md" />
-
-        <Box
-          style={(theme) => ({
-            backgroundColor: theme.colors.gray[0],
-            padding: theme.spacing.md,
-            borderRadius: theme.radius.sm,
-            maxHeight: 150,
-            overflowY: "auto",
-            whiteSpace: "pre-wrap",
-            fontSize: theme.fontSizes.sm,
-            color: theme.colors.dark[6],
-          })}
-        >
-          {job.terms_and_conditions}
-        </Box>
-      </Stack>
-    </Card>
+      {/* 🔸 Contact Section */}
+      <Divider label="Contact Information" labelPosition="center" my="sm" />
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xs">
+        <Text size="sm">
+          <strong>Agency:</strong> {job.contact.agencyName}
+        </Text>
+        <Text size="sm">
+          <strong>Contact Person:</strong> {job.contact.contactPerson}
+        </Text>
+        <Text size="sm">
+          <strong>Phone:</strong> {job.contact.phone}
+        </Text>
+        <Text size="sm">
+          <strong>Email:</strong> {job.contact.email}
+        </Text>
+        <Text size="sm">
+          <strong>WhatsApp:</strong> {job.contact.whatsapp}
+        </Text>
+      </SimpleGrid>
+    </Stack>
   );
 }

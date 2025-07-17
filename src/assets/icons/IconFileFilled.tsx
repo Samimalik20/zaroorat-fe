@@ -5,8 +5,8 @@ function IconFileFilled(props: ICommonIconProps) {
     <svg
     {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="currentColor"
       className="icon icon-tabler icons-tabler-filled icon-tabler-file"

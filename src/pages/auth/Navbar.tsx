@@ -2,111 +2,175 @@ import {
   Card,
   Button,
   Flex,
-  ActionIcon,
-  Avatar,
-  Group,
-  Menu,
+  Image,
+  Anchor,
+  Center,
   Stack,
-  Text,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { Role } from "../../interfaces/ICommonIconProps";
-import IconLogout from "../../assets/icons/IconLogout";
-import IconSettings from "../../assets/icons/IconSettings";
-import getInitials from "../../utils/getInitials";
 
 function MyNavbar() {
-  const largeScreen = useMediaQuery("(min-width: 56.25em)");
+  const isSmallScreen = useMediaQuery("(max-width: 56.25em)");
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+
   const handleNavigate = () => {
     if (user?.role === Role.ADMIN) {
       navigate("/dashboard");
     } else if (user?.role === Role.CITY_MANAGER) {
-      navigate("/dashbaord/my-recruiters");
+      navigate("/dashboard/city-salesmans");
     } else if (user?.role === Role.SALESMAN) {
-      navigate("/dashboard/district-candidates");
-    } else {
-      return;
+      navigate("/dashboard/professionals");
     }
   };
 
-  //  if (user?.role === Role.ADMIN) {
-  //     return <Navigate to="/dashboard" />;
-  //   } else if (user?.role === Role.DISTRICT_OFFICER) {
-  //     return <Navigate to="/dashboard/my-recruiters" />;
-  //   } else if (user?.role === Role.RECRUITER) {
-  //     return <Navigate to="/dashboard/district-candidates" />;
-  //   }
   return (
-    <Card px={100}>
-      <Flex
-        justify={"space-between"}
-        align={"center"}
-        // bg={"blue"}
-        gap={'lg'}
-      >
-        <Text fw={900}>Logo</Text>
-
-        {!user ? (
-          <Flex gap="xs" pr={largeScreen ? 0 : 10}>
-            <Button onClick={() => navigate("/auth/sign-in")}>LOG IN</Button>
-            <Button onClick={() => navigate("/auth/sign-up")}>SIGN UP</Button>
-          </Flex>
-        ) : (
-          user.role !== Role.CUSTOMER && (
-            <Button onClick={() => handleNavigate()}>Dashboard</Button>
-          )
-        )}
-        {user && user.role === Role.CUSTOMER && (
-          <Group>
-            <Menu>
-              <Menu.Target>
-                <ActionIcon variant="subtle" size={"lg"}>
-                  <IconSettings withOutline fill="none" size={32} />
-                </ActionIcon>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Label>
-                  <Group>
-                    <Avatar
-                      size={52}
-                      src={
-                        user && user.profileImage ? user.profileImage.url : ""
-                      }
-                    />
-                    <Stack gap={0}>
-                      <Text>{user?.email}</Text>
-                      <Text>{user?.fullName}</Text>
-                    </Stack>
-                  </Group>
-                </Menu.Label>
-                <Menu.Divider />
-                <Menu.Item
-                  onClick={() => navigate("/stepper")}
-                  leftSection={<IconSettings fill="none" withOutline />}
-                >
-                  Profile Settings
-                </Menu.Item>
-                <Menu.Item
-                  onClick={logout}
-                  color="red"
-                  leftSection={<IconLogout fill="none" color="red" />}
-                >
-                  Logout
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-            <Avatar
-              size={"lg"}
-              src={user && user.profileImage ? user.profileImage.url : ""}
-              name={getInitials(user?.fullName ?? "")}
+    <Card bg={"green"} h="auto" p={20} shadow="xl" radius={0}>
+      <Center w="100%">
+        {isSmallScreen ? (
+          <Stack align="center" gap="md" w="100%">
+            <Image
+              w={180}
+              src="https://ik.imagekit.io/yzrrrgg3d/professional/horizontal-removebg-preview%20(1).png?updatedAt=1749904445628"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/")}
             />
-          </Group>
+
+            <Flex wrap="wrap" justify="center" gap="sm">
+              {[
+                "Our Services",
+                "About Us",
+                "Become Professional",
+                "Browse Jobs",
+              ].map((label, index) => (
+                <Anchor
+                  key={index}
+                  c="red"
+                  fz={14}
+                  onClick={() => {
+                    const sectionPath =
+                      label === "Our Services"
+                        ? "/"
+                        : label === "About Us"
+                        ? "/"
+                        : label === "Become Professional"
+                        ? "/professional-onboarding"
+                        : "/job-indexing";
+
+                    navigate(sectionPath);
+                  }}
+                >
+                  {label}
+                </Anchor>
+              ))}
+            </Flex>
+
+            <Flex justify="center" gap="sm" wrap="wrap">
+              {user ? (
+                <Button
+                  variant="outline"
+                  color="white"
+                  size="sm"
+                  onClick={handleNavigate}
+                >
+                  Dashboard
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    bg="#309945"
+                    c="white"
+                    size="sm"
+                    onClick={() => navigate("/auth/sign-in")}
+                    w={120}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    bg="transparent"
+                    size="sm"
+                    style={{ border: "2px solid white" }}
+                    onClick={() => navigate("/auth/sign-up")}
+                  >
+                    GET STARTED
+                  </Button>
+                </>
+              )}
+            </Flex>
+          </Stack>
+        ) : (
+          <Flex justify="space-between" align="center" w="100%">
+            <Image
+              w={275}
+              src="https://ik.imagekit.io/yzrrrgg3d/professional/horizontal-removebg-preview%20(1).png?updatedAt=1749904445628"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/")}
+            />
+
+            <Flex gap={30}>
+              {[
+                "Our Services",
+                "About Us",
+                "Become Professional",
+                "Browse Jobs",
+              ].map((label, index) => (
+                <Anchor
+                  key={index}
+                  c="white"
+                  fz={16}
+                  onClick={() => {
+                    const sectionPath =
+                      label === "Our Services"
+                        ? "/"
+                        : label === "About Us"
+                        ? "/"
+                        : label === "Become Professional"
+                        ? "/professional-onboarding"
+                        : "/job-indexing";
+
+                    navigate(sectionPath);
+                  }}
+                >
+                  {label}
+                </Anchor>
+              ))}
+            </Flex>
+
+            <Flex gap={10}>
+              {user ? (
+                <Button
+                  variant="outline"
+                  color="white"
+                  onClick={handleNavigate}
+                >
+                  Dashboard
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    bg="#309945"
+                    c="white"
+                    onClick={() => navigate("/auth/sign-in")}
+                    w={150}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    bg="transparent"
+                    style={{ border: "2px solid white" }}
+                    onClick={() => navigate("/auth/sign-up")}
+                  >
+                    GET STARTED
+                  </Button>
+                </>
+              )}
+            </Flex>
+          </Flex>
         )}
-      </Flex>
+      </Center>
     </Card>
   );
 }

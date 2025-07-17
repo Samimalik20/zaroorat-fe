@@ -24,6 +24,19 @@ export interface FileDto {
   url: string;
 }
 
+export interface Address {
+  /**
+   * Latitude of the user address
+   * @example 30.1575
+   */
+  latitude: number;
+  /**
+   * Longitude of the user address
+   * @example 71.5249
+   */
+  longitude: number;
+}
+
 export interface User {
   /**
    * Unique identifier of the user
@@ -50,7 +63,7 @@ export interface User {
    * Role of the user
    * @example "Admin"
    */
-  role: "Admin" | "City Manager" | "Customer" | "Salesman";
+  role: "Admin" | "City Manager" | "Customer" | "Salesman" | "Professional";
   /**
    * Timestamp when the user was created
    * @format date-time
@@ -68,6 +81,7 @@ export interface User {
    * @example "2023-01-02T00:00:00.000Z"
    */
   updatedAt: string;
+  address: Address;
   /**
    * Version key (hidden)
    * @example 0
@@ -117,6 +131,27 @@ export interface ResetPasswordDTO {
   password: string;
   /** @default "Admin@123" */
   confirmPassword: string;
+}
+
+export interface AdminAnalyticsDto {
+  /** @example 420 */
+  totalProfessionals: number;
+  /** @example 1350 */
+  totalCustomers: number;
+  /** @example 870 */
+  totalBookings: number;
+  /** @example 320 */
+  foreignJobApplications: number;
+  /** @example 380 */
+  activeProfessionals: number;
+  /** @example 650 */
+  completedBookings: number;
+  /** @example 950 */
+  activeUsers: number;
+  /** @example 150 */
+  inactiveUsers: number;
+  /** @example 120 */
+  newUsersThisMonth: number;
 }
 
 export interface CreateInquiryDto {
@@ -304,7 +339,7 @@ export interface Professional {
    * @example "60f7a1c5e5b3a72b3c8a830f"
    */
   _id: string;
-  /** @example "john doe" */
+  /** @example "Sami Ullah" */
   name: string;
   /** @example "03001234567" */
   phone: string;
@@ -349,6 +384,8 @@ export interface Booking {
   time: string;
   /** Date and time of the booking */
   city: string;
+  /** Date and time of the booking */
+  type: string;
   /** @example "pending" */
   status: "pending" | "confirmed" | "completed" | "cancelled";
   /** Additional notes or instructions from the customer */
@@ -364,6 +401,275 @@ export interface Booking {
 export interface PatchProfessionalDTO {
   /** @example "2025-07-01T10:00:00Z" */
   professionalId: string;
+}
+
+export interface SalaryDto {
+  /** @example 1200 */
+  amount?: number;
+  /** @example "AED" */
+  currency?: string;
+  /** @example "Plus overtime" */
+  notes?: string;
+}
+
+export interface BenefitsDto {
+  /** @default false */
+  accommodation?: boolean;
+  /** @default false */
+  food?: boolean;
+  /** @default false */
+  transport?: boolean;
+  /** @default true */
+  medical?: boolean;
+  other?: string[];
+}
+
+export interface ContractDetailsDto {
+  /** @example 24 */
+  durationMonths?: number;
+  /** @default true */
+  renewable?: boolean;
+  /** @example 6 */
+  workingDaysPerWeek?: number;
+  /** @example 8 */
+  workingHoursPerDay?: number;
+  /** @default true */
+  overtimeAvailable?: boolean;
+}
+
+export interface InterviewDetailsDto {
+  /** @example "2025-07-01T10:00:00Z" */
+  date?: string;
+  mode?: "In-person" | "Zoom" | "Skype" | "Phone" | "Video Test";
+  location?: string;
+  notes?: string;
+}
+
+export interface CreateJobPostDto {
+  /** @example "Electrician for building maintenance" */
+  title: string;
+  category:
+    | "Electrician"
+    | "Plumber"
+    | "Welder"
+    | "Carpenter"
+    | "HVAC Technician"
+    | "Mason"
+    | "Helper"
+    | "Driver"
+    | "Other";
+  /** @example "UAE" */
+  country: string;
+  /** @example "Dubai" */
+  city?: string;
+  /** @example "Al Futtaim Group" */
+  companyName?: string;
+  /** @example "Wiring and electrical maintenance..." */
+  description: string;
+  /** @example "Install wires,Repair sockets" */
+  responsibilities?: string;
+  /** @example "Wiring,Tools handling" */
+  skillsRequired: string;
+  /** @example "Minimum 2 years of experience in electrical work" */
+  experienceRequired: string;
+  /** @example "Matric / Diploma" */
+  education?: string;
+  salary?: SalaryDto;
+  benefits?: BenefitsDto;
+  contractDetails?: ContractDetailsDto;
+  interviewDetails?: InterviewDetailsDto;
+}
+
+export interface Salary {
+  /** @example 1500 */
+  amount?: number;
+  /** @example "AED" */
+  currency?: string;
+  /** @example "Accommodation and food included" */
+  notes?: string;
+}
+
+export interface Benefits {
+  /**
+   * Is accommodation provided?
+   * @default false
+   */
+  accommodation?: boolean;
+  /**
+   * Is food provided?
+   * @default false
+   */
+  food?: boolean;
+  /**
+   * Is transport provided?
+   * @default false
+   */
+  transport?: boolean;
+  /**
+   * Is medical coverage provided?
+   * @default true
+   */
+  medical?: boolean;
+  /** Other additional benefits */
+  other?: string[];
+}
+
+export interface ContractDetails {
+  /**
+   * Duration of the contract in months
+   * @example 24
+   */
+  durationMonths?: number;
+  /**
+   * Is the contract renewable?
+   * @default true
+   */
+  renewable?: boolean;
+  /**
+   * Working days per week
+   * @example 6
+   */
+  workingDaysPerWeek?: number;
+  /**
+   * Working hours per day
+   * @example 8
+   */
+  workingHoursPerDay?: number;
+  /**
+   * Is overtime available?
+   * @default true
+   */
+  overtimeAvailable?: boolean;
+}
+
+export interface Interview {
+  /**
+   * @format date-time
+   * @example "2025-06-25T08:00:00Z"
+   */
+  date?: string;
+  /** @example "Online" */
+  mode?: string;
+  /** @example "Lahore Office" */
+  location?: string;
+  /** @example "Bring original documents" */
+  notes?: string;
+}
+
+export interface Job {
+  /**
+   * Unique identifier for the job post
+   * @example "60f7a1c5e5b3a72b3c8a830f"
+   */
+  _id: string;
+  /** @example "Electrician for Building Maintenance" */
+  title: string;
+  /** @example "Electrician" */
+  category:
+    | "Electrician"
+    | "Plumber"
+    | "Welder"
+    | "Carpenter"
+    | "HVAC Technician"
+    | "Mason"
+    | "Helper"
+    | "Driver"
+    | "Other";
+  /** @example "UAE" */
+  country: string;
+  /** @example "Dubai" */
+  city?: string;
+  /** @example "Al Futtaim Group" */
+  companyName?: string;
+  /** @example "Responsible for installing and repairing wiring..." */
+  description: string;
+  /** @example "Wiring,Inspection" */
+  responsibilities?: string;
+  /** @example "Electrical tools,Safety knowledge" */
+  skillsRequired?: string;
+  /** @example "2 years minimum experience required" */
+  experienceRequired: string;
+  /** @example "Matric / Technical Diploma" */
+  education?: string;
+  salary?: Salary;
+  benefits?: Benefits;
+  contractDetails?: ContractDetails;
+  interviewDetails?: Interview;
+  /** @example true */
+  isActive: boolean;
+  /**
+   * @format date-time
+   * @example "2025-06-25T09:00:00.000Z"
+   */
+  createdAt: string;
+}
+
+export interface JobQueryDto {
+  /**
+   * Job title
+   * @example "Junior Constable"
+   */
+  title?: string;
+  /**
+   * Job title
+   * @example "Junior Constable"
+   */
+  country?: string;
+  /**
+   * Job title
+   * @example "Junior Constable"
+   */
+  category?: string;
+  /**
+   * Job title
+   * @example 2
+   */
+  limit?: number;
+}
+
+export interface ContactDto {
+  agencyName?: string;
+  contactPerson?: string;
+  phone?: string;
+  email?: string;
+  whatsapp?: string;
+}
+
+export interface UpdateJobPostDto {
+  /** @example "Electrician for building maintenance" */
+  title?: string;
+  category?:
+    | "Electrician"
+    | "Plumber"
+    | "Welder"
+    | "Carpenter"
+    | "HVAC Technician"
+    | "Mason"
+    | "Helper"
+    | "Driver"
+    | "Other";
+  /** @example "UAE" */
+  country?: string;
+  /** @example "Dubai" */
+  city?: string;
+  /** @example "Al Futtaim Group" */
+  companyName?: string;
+  /** @example "Wiring and electrical maintenance..." */
+  description?: string;
+  /** @example "Install wires,Repair sockets" */
+  responsibilities?: string;
+  /** @example "Wiring,Tools handling" */
+  skillsRequired?: string;
+  /** @example "Minimum 2 years of experience in electrical work" */
+  experienceRequired?: string;
+  /** @example "Matric / Diploma" */
+  education?: string;
+  salary?: SalaryDto;
+  benefits?: BenefitsDto;
+  contractDetails?: ContractDetailsDto;
+  interviewDetails?: InterviewDetailsDto;
+  contact?: ContactDto;
+  isActive: boolean;
 }
 
 import type {
@@ -674,6 +980,22 @@ export class Api<
       }),
 
     /**
+     * @description Fetches overall statistics such as total professionals, customers, bookings, job applications, and user activity.
+     *
+     * @tags User
+     * @name UserControllerGetStats
+     * @summary Get admin analytics stats
+     * @request GET:/auth/stats
+     */
+    userControllerGetStats: (params: RequestParams = {}) =>
+      this.request<AdminAnalyticsDto, void>({
+        path: `/auth/stats`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
      * No description
      *
      * @tags User
@@ -692,11 +1014,11 @@ export class Api<
      *
      * @tags User
      * @name UserControllerUploadImage
-     * @request POST:/auth/upload
+     * @request POST:/auth/{id}/upload-profile
      */
-    userControllerUploadImage: (params: RequestParams = {}) =>
+    userControllerUploadImage: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/auth/upload`,
+        path: `/auth/${id}/upload-profile`,
         method: "POST",
         ...params,
       }),
@@ -966,6 +1288,11 @@ export class Api<
      */
     salesmanControllerGetAll: (
       query?: {
+        /**
+         * Phone number
+         * @example "03001234567"
+         */
+        name?: string;
         /**
          * District
          * @example "Lahore"
@@ -1248,6 +1575,123 @@ export class Api<
         method: "PATCH",
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+  };
+  jobs = {
+    /**
+     * No description
+     *
+     * @tags jobs
+     * @name JobsControllerCreate
+     * @summary Create a new job posting
+     * @request POST:/jobs
+     */
+    jobsControllerCreate: (
+      data: CreateJobPostDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Job, any>({
+        path: `/jobs`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags jobs
+     * @name JobsControllerFindAll
+     * @summary Get all jobs or filter by title
+     * @request GET:/jobs
+     */
+    jobsControllerFindAll: (
+      query: {
+        /**
+         * Job title
+         * @example "Junior Constable"
+         */
+        title?: string;
+        /**
+         * Job title
+         * @example "Junior Constable"
+         */
+        country?: string;
+        /**
+         * Job title
+         * @example "Junior Constable"
+         */
+        category?: string;
+        /**
+         * Job title
+         * @example 2
+         */
+        limit?: number;
+        JobQueryDto: JobQueryDto;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Job[], any>({
+        path: `/jobs`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags jobs
+     * @name JobsControllerFindOne
+     * @summary Get job by ID
+     * @request GET:/jobs/{id}
+     */
+    jobsControllerFindOne: (id: string, params: RequestParams = {}) =>
+      this.request<Job, void>({
+        path: `/jobs/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags jobs
+     * @name JobsControllerUpdate
+     * @summary Update job by ID
+     * @request PATCH:/jobs/{id}
+     */
+    jobsControllerUpdate: (
+      id: string,
+      data: UpdateJobPostDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Job, void>({
+        path: `/jobs/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags jobs
+     * @name JobsControllerRemove
+     * @summary Delete job by ID
+     * @request DELETE:/jobs/{id}
+     */
+    jobsControllerRemove: (id: string, params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/jobs/${id}`,
+        method: "DELETE",
         ...params,
       }),
   };

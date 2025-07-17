@@ -10,6 +10,10 @@ import IconReceiptDollar from "../assets/icons/IconReceiptDollar";
 import IconSettings from "../assets/icons/IconSettings";
 import { useAuth } from "../contexts/AuthContext";
 import { Role } from "../interfaces/ICommonIconProps";
+import IconUsers from "../assets/icons/IconUser";
+import IconBriefCase from "../assets/icons/IconBriefCase";
+import IconTwoUsers from "../assets/icons/IconUsers";
+import IconUsersPlus from "../assets/icons/IconUsersPlus";
 
 interface Links {
   label: string;
@@ -25,13 +29,24 @@ const adminLinks: Links[] = [
   },
   {
     label: "City Managers",
-    icon: "IconUsersGroup",
+    icon: "IconTwoUsers",
     path: "/dashboard/city-managers",
+  },
+   {
+    label: "Salesman",
+    icon: "IconUsersPlus",
+    path: "/dashboard/salesmans",
   },
   {
     label: "Professionals",
     icon: "IconUsersGroup",
     path: "/dashboard/professionals",
+  },
+ 
+  {
+    label: "Jobs",
+    icon: "IconBriefCase",
+    path: "/dashboard/jobs",
   },
   {
     label: "Settings",
@@ -44,16 +59,16 @@ const managerLinks: Links[] = [
   {
     label: "Salesman",
     icon: "IconUsersGroup",
-    path: "/dashboard/city-salemans",
+    path: "/dashboard/city-salesmans",
   },
   {
     label: "Professionals",
-    icon: "IconUsersGroup",
+    icon: "IconUsers",
     path: "/dashboard/professionals",
   },
   {
     label: "Service Requests",
-    icon: "IconUsersGroup",
+    icon: "IconBriefCase",
     path: "/dashboard/service-requests",
   },
   {
@@ -67,7 +82,7 @@ const SalesPersonLinks: Links[] = [
   {
     label: "Professionals",
     icon: "IconUsersGroup",
-    path: "/dashboard/professionals",
+    path: "/dashboard/city-professionals",
   },
   {
     label: "Settings",
@@ -104,8 +119,20 @@ function Sidenav() {
       IconWorld: (
         <IconWorld fill="none" withOutline color={color} size={size} />
       ),
+      IconBriefCase: (
+        <IconBriefCase fill="none" withOutline color={color} size={size} />
+      ),
       IconUsersGroup: (
         <IconUsersGroup fill="none" withOutline color={color} size={size} />
+      ),
+      IconTwoUsers: (
+        <IconTwoUsers fill="none" withOutline color={color} size={size} />
+      ),
+      IconUsersPlus: (
+        <IconUsersPlus fill="none" withOutline color={color} size={size} />
+      ),
+      IconUsers: (
+        <IconUsers fill="none" withOutline color={color} size={size} />
       ),
       IconTopologyStar: (
         <IconTopologyStar fill="none" withOutline color={color} size={size} />

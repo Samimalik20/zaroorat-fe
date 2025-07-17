@@ -22,10 +22,12 @@ function ProfessionalForm({
   onClose,
   recruiter,
   district,
+  isProfessional,
 }: {
   onClose: () => void;
   recruiter?: Professional;
   district?: string;
+  isProfessional: boolean;
 }) {
   const center = {
     lat: recruiter?.coordinates?.latitude || -3.745,
@@ -77,7 +79,6 @@ function ProfessionalForm({
   }
 
   const inputRef = useRef<google.maps.places.SearchBox | null>(null);
-
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [mapCenter, setMapCenter] = useState(center);
   const [selectedPlace, setSelectedPlace] =
@@ -120,10 +121,47 @@ function ProfessionalForm({
         form.setFieldValue("longitude", location.lng());
 
         if (map) {
-          (map as google.maps.Map).setCenter(newCenter);
-          (map as google.maps.Map).setZoom(15);
+          map.setCenter(newCenter);
+          map.setZoom(15);
         }
       }
+    }
+  };
+
+  const handleGetCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log(latitude, longitude, "addrss");
+
+          setMapCenter({ lat: latitude, lng: longitude });
+          form.setFieldValue("latitude", latitude);
+          form.setFieldValue("longitude", longitude);
+
+          if (map) {
+            map.setCenter({ lat: latitude, lng: longitude });
+            map.setZoom(15);
+          }
+
+          const geocoder = new window.google.maps.Geocoder();
+          const latlng = { lat: latitude, lng: longitude };
+
+          geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === "OK" && results && results[0]) {
+              const address = results[0].formatted_address;
+              form.setFieldValue("address", address);
+            } else {
+              console.error("Geocoder failed due to:", status);
+            }
+          });
+        },
+        (error) => {
+          console.error("Error getting location", error);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
   };
 
@@ -138,12 +176,19 @@ function ProfessionalForm({
           {...form.getInputProps("name")}
         />
 
-        <TextInput
+        <Select
           label="City"
           placeholder="Select City"
           withAsterisk
-          value={district}
-          disabled
+          searchable
+          data={[
+            "Multan",
+            "Lahore",
+            "Karachi",
+            "Islamabad",
+            "Faisalabad",
+            "Rawalpindi",
+          ]}
           {...form.getInputProps("city")}
         />
         <Select
@@ -195,14 +240,21 @@ function ProfessionalForm({
             onPlacesChanged={handlePlacesChanged}
           >
             <TextInput
-              label="Adress"
+              label="Address"
               placeholder="Search Address"
               {...form.getInputProps("address")}
             />
           </StandaloneSearchBox>
         )}
 
-        {/* Which area is your property in? */}
+        <Button
+          variant="light"
+          size="xs"
+          mt="xs"
+          onClick={handleGetCurrentLocation}
+        >
+          Use Current Location
+        </Button>
 
         {isLoaded && (
           <GoogleMap
@@ -212,11 +264,15 @@ function ProfessionalForm({
             onLoad={onLoad}
             onUnmount={onUnmount}
           >
-            {selectedPlace && selectedPlace.geometry?.location && (
+            {(selectedPlace?.geometry?.location || form.values.latitude) && (
               <Marker
                 position={{
-                  lat: selectedPlace.geometry.location.lat(),
-                  lng: selectedPlace.geometry.location.lng(),
+                  lat:
+                    selectedPlace?.geometry?.location?.lat() ??
+                    form.values.latitude,
+                  lng:
+                    selectedPlace?.geometry?.location?.lng() ??
+                    form.values.longitude,
                 }}
               />
             )}
@@ -224,12 +280,21 @@ function ProfessionalForm({
         )}
 
         <Group justify="flex-end" mt="md">
-          <Button type="submit" loading={loading || loadingUpdate}>
-            {recruiter ? "Update Professional" : "Add Professional"}
+          <Button
+            type="submit"
+            loading={loading || loadingUpdate}
+            w={isProfessional ? "100%" : undefined}
+          >
+            {recruiter
+              ? "Update Professional"
+              : isProfessional
+              ? "Register as Professional"
+              : "Add Professional"}
           </Button>
         </Group>
       </Stack>
     </form>
   );
 }
+
 export default ProfessionalForm;

@@ -10,163 +10,61 @@ import {
   Image,
   AspectRatio,
   Grid,
+  Button,
   Group,
 } from "@mantine/core";
 import MyNavbar from "../auth/Navbar";
-import IconSettings from "../../assets/icons/IconSettings";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
-import cleaningImage from '../../assets/images/house-cleaning.png'
+import Footer from "./Footer";
 
 export default function CityDetails() {
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery("(max-width: 56.25em)");
+  const { cityId } = useParams();
 
   const services = [
     {
       title: "AC Repair",
-      href: "/ac-services",
+      href: `/city/${cityId}/ac-services`,
       imageUrl:
         "https://ik.imagekit.io/yzrrrgg3d/professional/ac%20repair.webp?updatedAt=1748413681218",
     },
     {
       title: "Electritian",
-      href: "/electrician-services",
+
+      href: `/city/${cityId}/electrician-services`,
 
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNEEvrV6gH-9nBdvg0zX0TRdjwHC8beAlVQ&s",
     },
     {
       title: "Plumber",
-      href: "",
+      href: `/city/${cityId}/plumber-services`,
 
       imageUrl:
         "https://ik.imagekit.io/yzrrrgg3d/professional/plumber.png?updatedAt=1749093442937",
     },
     {
       title: "Carpenter",
-      href: "",
+      href: `/city/${cityId}/carpenter-services`,
 
       imageUrl:
         "https://ik.imagekit.io/yzrrrgg3d/professional/9635057-removebg-preview.png?updatedAt=1749093512625",
     },
     {
-      title: "Wall Panels",
-      href: "/wallpanel-services",
+      title: "Home Cleaning",
+      href: `/city/${cityId}/cleaning-services`,
 
       imageUrl:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/5926008.jpg?updatedAt=1749093753911",
+        "https://ik.imagekit.io/yzrrrgg3d/professional/52068-removebg-preview.png?updatedAt=1750059499238",
     },
     {
-      title: "Appliance Repair",
-      href: "",
+      title: "Painter",
+      href: `/city/${cityId}/painting-services`,
 
       imageUrl:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/18091-removebg-preview.png?updatedAt=1749094082020",
-    },
-  ];
-
-  const bookedServices = [
-    {
-      title: "Pest control (includes utensil removal)",
-      image:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1731504272013-0ef836.webp?updatedAt=1748425034416",
-      rating: 4.79,
-      reviews: "107K",
-      price: 1098,
-      icon: "settings",
-    },
-    {
-      title: "At Home Consultation",
-      image:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1727776714128-a28056.webp?updatedAt=1748925239758",
-      rating: 4.79,
-      reviews: "107K",
-      price: 1098,
-      icon: "settings",
-    },
-    {
-      title: "Apartment Pest Control",
-      image:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1738258955021-96e8b0.webp?updatedAt=1748925239724",
-      rating: 4.79,
-      reviews: "107K",
-      price: 1098,
-      icon: "settings",
-    },
-    {
-      title: "Foam Jet AC Service",
-      image:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1738148578095-ba2fe3.webp?updatedAt=1748521277787",
-      rating: 4.79,
-      reviews: "107K",
-      price: 1098,
-      icon: "settings",
-    },
-    {
-      title: "Apartment Termite Control",
-      image:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1729772247309-29d7b5.webp?updatedAt=1748925239766",
-      rating: 4.79,
-      reviews: "107K",
-      price: 1098,
-      icon: "settings",
-    },
-  ];
-
-  const pestServices = [
-    {
-      title: "Full Home Cleaning",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1700129474836-c5b146.webp?updatedAt=1748426437066",
-    },
-    {
-      title: "Sofa & Carpet Cleaning",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1700204929955-75dd47.webp?updatedAt=1748926041793",
-    },
-    {
-      title: "Cockroach,Ant & General Pest Control",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1700141859007-d310cd.webp?updatedAt=1748926041786",
-    },
-    {
-      title: "Bathroom Cleaning",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1700217115195-4b42c0.webp?updatedAt=1748926041704",
-    },
-    {
-      title: "Kitchen Cleaning",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1700217150690-faf4ec.webp?updatedAt=1748926041725",
-    },
-  ];
-
-  const applianceServices = [
-    {
-      title: "Washing Machine",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1744620504925-e5c5e3.webp?updatedAt=1748926745953",
-    },
-    {
-      title: "Air Cooler",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1744620493814-5a8c02.webp?updatedAt=1748926745916",
-    },
-    {
-      title: "Gayser",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1744620483134-bbbeee.webp?updatedAt=1748926745961",
-    },
-    {
-      title: "Television",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1744620497539-f8e4a6.webp?updatedAt=1748926745519",
-    },
-    {
-      title: "Kitchen Cleaning",
-      imageURL:
-        "https://ik.imagekit.io/yzrrrgg3d/professional/1700217150690-faf4ec.webp?updatedAt=1748926041725",
+        "https://ik.imagekit.io/yzrrrgg3d/professional/10046961.jpg?updatedAt=1750152168166",
     },
   ];
 
@@ -177,409 +75,361 @@ export default function CityDetails() {
         fluid
         px={isSmallScreen ? 12 : 150}
         py={isSmallScreen ? 12 : 50}
+        bg={"green"}
       >
-        <Stack gap={100}>
-          <SimpleGrid
-            cols={{
-              base: 1,
-              sm: 1,
-              md: 1,
-              lg: 2,
-              xl: 2,
-            }}
-            spacing={100}
-          >
-            <Box>
-              <Stack>
-                <Title
-                  order={1}
-                  w={"70%"}
-                  style={{
-                    fontFamily: "serif",
-                  }}
-                >
-                  Home services at your doorstep
-                </Title>
+        <SimpleGrid
+          cols={{
+            base: 1,
+            sm: 1,
+            md: 1,
+            lg: 2,
+            xl: 2,
+          }}
+          spacing={100}
+        >
+          <Box>
+            <Stack>
+              <Title
+                order={1}
+                w={"70%"}
+                style={{
+                  fontFamily: "serif",
+                }}
+                c={"white"}
+              >
+                Home services at your doorstep
+              </Title>
 
-                <Card withBorder>
-                  <Stack>
-                    <Title order={4} c={"dimmed"}>
-                      What are you looking for?
-                    </Title>
-                    <SimpleGrid
-                      cols={{
-                        base: 2,
-                        sm: 2,
-                        md: 2,
-                        lg: 3,
-                        xl: 3,
-                      }}
-                    >
-                      {services.map((service, ind) => (
-                        <Box
-                          key={ind}
-                          style={{
-                            cursor: "pointer",
-                          }}
-                          onClick={() => navigate(service.href)}
-                        >
-                          <Stack gap={"xs"}>
-                            <Flex
-                              justify={"center"}
-                              align={"center"}
-                              bg={"#f7f7f7"}
-                              h={75}
-                              style={{
-                                borderRadius: 8,
-                              }}
-                            >
-                              <Image w={"40%"} src={service.imageUrl} />
-                            </Flex>
-                            <Text size="sm">{service.title}</Text>
-                          </Stack>
-                        </Box>
-                      ))}
-                    </SimpleGrid>
-                    <SimpleGrid cols={2}>
-                      <Box style={{
-                        cursor:"pointer"
-                      }}>
-                        <Stack gap={"xs"}>
+              <Card withBorder>
+                <Stack>
+                  <Title order={4} c={"dimmed"}>
+                    What are you looking for?
+                  </Title>
+                  <SimpleGrid
+                    cols={{
+                      base: 2,
+                      sm: 2,
+                      md: 2,
+                      lg: 3,
+                      xl: 3,
+                    }}
+                  >
+                    {services.map((service, ind) => (
+                      <Box
+                        key={ind}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() => navigate(service.href)}
+                        h={155}
+                      >
+                        <Stack gap={"xs"} align="">
                           <Flex
-                            justify={"space-between"}
+                            justify={"center"}
                             align={"center"}
                             bg={"#f7f7f7"}
+                            h={100}
                             style={{
                               borderRadius: 8,
                             }}
-                            p={"sm"}
                           >
-                            <Text size="sm">Pack & Go</Text>
-                             <Image
-                              w={70}
-                              src={
-                           'https://ik.imagekit.io/yzrrrgg3d/professional/delivery.png?updatedAt=1749094682279'
-                              }
-                            />
+                            <Image w={75} h={75} src={service.imageUrl} />
                           </Flex>
+                          <Text size="sm" ta={'center'}>{service.title}</Text>
                         </Stack>
                       </Box>
-                      <Box style={{
-                        cursor:"pointer"
-                      }}>
-                        <Stack gap={"xs"}>
-                          <Flex
-                            justify={"space-between"}
-                            align={"center"}
-                            bg={"#f7f7f7"}
-                            style={{
-                              borderRadius: 8,
-                            }}
-                            p={"sm"}
-                          >
-                            <Text size="sm">Home Cleaning</Text>
-                            <Image
-                            w={47}
-                              src={
-                               cleaningImage
-                              }
-                            />
-                          </Flex>
-                        </Stack>
-                      </Box>
-                    </SimpleGrid>
-                  </Stack>
-                </Card>
-              </Stack>
-            </Box>
-            <Box>
-              <Grid gutter="md">
-                {/* Left side - tall image */}
-                <Grid.Col span={{ base: 12, md: 6 }}>
-                  <AspectRatio ratio={3 / 4}>
-                    <Image
-                      src="https://ik.imagekit.io/yzrrrgg3d/professional/technician.avif?updatedAt=1748417515450"
-                      alt="Beauty Service"
-                      radius="md"
-                      fit="cover"
-                    />
-                  </AspectRatio>
-                  <AspectRatio ratio={4 / 2}>
-                    <Image
-                      mt={8}
-                      src="https://ik.imagekit.io/yzrrrgg3d/professional/cleaning.jfif?updatedAt=1748416600458"
-                      alt="Massage"
-                      radius="md"
-                      fit="cover"
-                    />
-                  </AspectRatio>
-                </Grid.Col>
-
-                {/* Right side - top wide image */}
-                <Grid.Col span={{ base: 12, md: 6 }}>
-                  <AspectRatio ratio={4 / 2}>
-                    <Image
-                      src="https://ik.imagekit.io/yzrrrgg3d/professional/plumber.jpg?updatedAt=1748419449182"
-                      alt="Beauty Service"
-                      radius="md"
-                      fit="cover"
-                    />
-                  </AspectRatio>
-                  <AspectRatio ratio={3 / 4}>
-                    <Image
-                      mt={8}
-                      src="https://ik.imagekit.io/yzrrrgg3d/professional/electrittian.jfif?updatedAt=1748416808520"
-                      alt="Massage"
-                      radius="md"
-                      fit="cover"
-                    />
-                  </AspectRatio>
-                </Grid.Col>
-              </Grid>
-            </Box>
-          </SimpleGrid>
-
-          <SimpleGrid
-            cols={{
-              base: 1,
-              sm: 2,
-              md: 2,
-              lg: 3,
-              xl: 3,
-            }}
-          >
-            <Box
-              h={222}
-              style={{
-                overflow: "hidden",
-                borderRadius: 8,
-                cursor: "pointer",
-              }}
-            >
-              <Image
-                src="https://ik.imagekit.io/yzrrrgg3d/professional/1745848240853-e53ad3.webp?updatedAt=1748420217698"
-                alt="..."
-                style={{
-                  transition: "transform 0.4s ease",
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              />
-            </Box>
-            <Box
-              h={222}
-              style={{
-                overflow: "hidden",
-                borderRadius: 8,
-                cursor: "pointer",
-              }}
-            >
-              <Image
-                src="https://ik.imagekit.io/yzrrrgg3d/professional/1740123536224-5eec97.webp?updatedAt=1748425280827"
-                alt="..."
-                style={{
-                  transition: "transform 0.4s ease",
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              />
-            </Box>
-            <Box
-              h={222}
-              style={{
-                overflow: "hidden",
-                borderRadius: 8,
-                cursor: "pointer",
-              }}
-            >
-              <Image
-                src="https://ik.imagekit.io/yzrrrgg3d/professional/1745848360087-3d3d8e.webp?updatedAt=1748419951729"
-                alt="..."
-                style={{
-                  transition: "transform 0.4s ease",
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              />
-            </Box>
-          </SimpleGrid>
-          <Stack>
-            <Title order={2}>Most Booked Service</Title>
-            <SimpleGrid
-              cols={{
-                base: 1,
-                sm: 1,
-                md: 2,
-                lg: 5,
-                xl: 5,
-              }}
-              spacing={"xl"}
-            >
-              {bookedServices.map((ser) => (
-                <Card shadow="sm" padding="md" radius="md" withBorder >
-                  <Box style={{ overflow: "hidden", borderRadius: 8 }}>
-                    <Image src={ser.image} alt="Pest Control" height={150} />
-                  </Box>
-
-                  <Text mt="sm" fw={600} fz="sm">
-                    {ser.title}
-                  </Text>
-
-                  <Group gap="xs" mt={4}>
-                    <IconSettings size={14} color="gold" />
-                    <Text fz="xs" c="dimmed" fw={500}>
-                      {ser.rating}
-                    </Text>
-                  </Group>
-
-                  <Text mt={4} fw={600}>
-                    {ser.price}
-                  </Text>
-                </Card>
-              ))}
-            </SimpleGrid>
-          </Stack>
-
-          <Box
-            style={{
-              overflow: "hidden",
-              borderRadius: 8,
-              cursor: "pointer",
-            }}
-          >
-            <Image
-              src="https://ik.imagekit.io/yzrrrgg3d/professional/1736922795409-bece35.webp?updatedAt=1748420217638"
-              alt="..."
-              style={{
-                transition: "transform 0.4s ease",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
-            />
-          </Box>
-          <Stack>
-            <Title>Cleaning & Pest Control</Title>
-            <SimpleGrid cols={{
-                base: 1,
-                sm: 1,
-                md: 2,
-                lg: 5,
-                xl: 5,
-              }}>
-              {pestServices.map((ser) => (
-                <Card
-                  style={{
-                    borderRadius: 8,
-                    height: 280,
-                    backgroundColor: "white",
-                  }}
-                  p={0}
-                >
-                  <Stack justify="space-between" h={"100%"}>
-                    <Text mt={20} ml={20} fw={600}>
-                      {ser.title}
-                    </Text>
-                    <Image src={ser.imageURL} />
-                  </Stack>
-                </Card>
-              ))}
-            </SimpleGrid>
-          </Stack>
-          <Stack>
-            <Title>Appliance Service & Repair</Title>
-            <SimpleGrid cols={{
-                base: 1,
-                sm: 1,
-                md: 2,
-                lg: 5,
-                xl: 5,
-              }}>
-              {applianceServices.map((ser) => (
-                <Card
-                  style={{
-                    borderRadius: 8,
-                    height: 280,
-                    backgroundColor: "white",
-                  }}
-                  p={0}
-                >
-                  <Stack justify="space-between" h={"100%"}>
-                    <Text mt={20} ml={20} fw={600}>
-                      {ser.title}
-                    </Text>
-                    <Image src={ser.imageURL} />
-                  </Stack>
-                </Card>
-              ))}
-            </SimpleGrid>
-          </Stack>
-          <Stack>
-            <Title order={2}>Home Repair & Installation</Title>
-            <SimpleGrid cols={{
-                base: 1,
-                sm: 1,
-                md: 2,
-                lg: 5,
-                xl: 5,
-              }} spacing={"xl"}>
-              <Card shadow="none" padding={0} radius="md" bg={"transparent"}>
-                <Box style={{ overflow: "hidden", borderRadius: 8 }}>
-                  <Image
-                    src="https://ik.imagekit.io/yzrrrgg3d/professional/1731504272013-0ef836.webp?updatedAt=1748425034416"
-                    alt="Pest Control"
-                    height={150}
-                  />
-                </Box>
-
-                <Stack gap={0}>
-                  <Text mt="sm" fw={600} fz="sm">
-                    Pest control (includes utensil removal)
-                  </Text>
-
-                  <Group gap="xs" mt={4}>
-                    <IconSettings size={14} color="gold" />
-                    <Text fz="xs" c="dimmed" fw={500}>
-                      4.79 (107K)
-                    </Text>
-                  </Group>
-
-                  <Text mt={4} fw={600}>
-                    ₹1,098
-                  </Text>
+                    ))}
+                  </SimpleGrid>
                 </Stack>
               </Card>
-            </SimpleGrid>
-          </Stack>
+            </Stack>
+          </Box>
+          <Box>
+            <Grid gutter="md">
+              {/* Left side - tall image */}
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <AspectRatio ratio={3 / 4} h={362}>
+                  <Image
+                    h={"100%"}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/technician.avif?updatedAt=1748417515450"
+                    alt="Beauty Service"
+                    radius="md"
+                    fit="cover"
+                  />
+                </AspectRatio>
+                <AspectRatio ratio={4 / 2} h={140}>
+                  <Image
+                    h={"100%"}
+                    mt={8}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/cleaning.jfif?updatedAt=1748416600458"
+                    alt="Massage"
+                    radius="md"
+                    fit="cover"
+                  />
+                </AspectRatio>
+              </Grid.Col>
+
+              {/* Right side - top wide image */}
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <AspectRatio ratio={4 / 2} h={140}>
+                  <Image
+                    h={"100%"}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/plumber.jpg?updatedAt=1748419449182"
+                    alt="Beauty Service"
+                    radius="md"
+                    fit="cover"
+                  />
+                </AspectRatio>
+                <AspectRatio ratio={3 / 4} h={362}>
+                  <Image
+                    h={"100%"}
+                    mt={8}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/electrician-builder-with-beard-worker-white-helmet-work-installation-lamps-height-professional-overalls-with-drill-background-repair-site.jpg?updatedAt=1749988871556"
+                    alt="Massage"
+                    radius="md"
+                    fit="cover"
+                  />
+                </AspectRatio>
+              </Grid.Col>
+            </Grid>
+          </Box>
+        </SimpleGrid>
+      </Container>
+      <Container size="lg" py="xl" fluid>
+        <Stack gap={60}>
+          <Card p="lg" radius="md" bg={"#E3FDFD"} withBorder>
+            <Grid align="center">
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Stack px={90}>
+                  <Stack gap="sm" maw={550}>
+                    <Title order={3}>AC Repair</Title>
+                    <Text>
+                      Our AC repair services ensure your cooling systems run
+                      efficiently and reliably. Whether it’s a minor issue or a
+                      complete breakdown, we’ve got you covered. We specialize
+                      in both residential and commercial air conditioning
+                      systems. Enjoy a cool and comfortable home with our
+                      same-day service options.
+                    </Text>
+                    <Button
+                      color={""}
+                      variant="filled"
+                      w={150}
+                      radius="md"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      Book Now
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Group>
+                  <Image
+                    w={300}
+                    src={
+                      "https://ik.imagekit.io/yzrrrgg3d/professional/272-removebg-preview.png?updatedAt=1749625004058"
+                    }
+                    alt={""}
+                  />
+
+                  <Image
+                    w={300}
+                    src={
+                      "https://ik.imagekit.io/yzrrrgg3d/professional/air_conditioner8-removebg-preview.png?updatedAt=1749621143129"
+                    }
+                    alt={""}
+                  />
+                </Group>
+              </Grid.Col>
+            </Grid>
+          </Card>
+
+          {/* Electrician */}
+          <Card p="lg" radius="md" bg={"#FFF4E0"} withBorder>
+            <Grid align="center">
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Group>
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/37811-removebg-preview.png?updatedAt=1749989268250"
+                    alt="Electrician"
+                  />
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/9991193-removebg-preview.png?updatedAt=1749989380577"
+                    alt="Electrician Work"
+                  />
+                </Group>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Stack px={90}>
+                  <Stack gap="sm" maw={550}>
+                    <Title order={3}>Electrician</Title>
+                    <Text>
+                      Our certified electricians handle wiring, repairs, and
+                      installations with precision. From power outages to fan
+                      and light installations, we cover all residential needs.
+                      We follow safety protocols to ensure your home is
+                      protected from electrical hazards. Affordable pricing and
+                      reliable service make us the top choice in your city.
+                    </Text>
+                    <Button
+                      color="yellow"
+                      variant="filled"
+                      w={150}
+                      radius="md"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      Book Now
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Grid.Col>
+            </Grid>
+          </Card>
+          <Card p="lg" radius="md" bg={"#E0F4FF"} withBorder>
+            <Grid align="center">
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Stack px={90}>
+                  <Stack gap="sm" maw={550}>
+                    <Title order={3}>Carpenter</Title>
+                    <Text>
+                      Hire our carpenters for custom woodwork, repairs, and
+                      installations. From doors and windows to cabinets and
+                      furniture, we craft it all with care. We use quality
+                      materials to ensure long-lasting durability and finish.
+                      Whether it’s a small fix or a big project, we work with
+                      precision and style.
+                    </Text>
+                    <Button
+                      color="blue"
+                      variant="filled"
+                      w={150}
+                      radius="md"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      Book Now
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Group>
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/38167-removebg-preview.png?updatedAt=1749989605805"
+                    alt="Woodwork"
+                  />
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/9635057-removebg-preview.png?updatedAt=1749093512625"
+                    alt="Carpenter"
+                  />
+                </Group>
+              </Grid.Col>
+            </Grid>
+          </Card>
+
+          {/* Plumber */}
+          <Card p="lg" radius="md" bg={"#FEECE2"} withBorder>
+            <Grid align="center">
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Group>
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/plumber.png?updatedAt=1749093442937"
+                    alt="Plumber"
+                  />
+                  <Image
+                    w={350}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/40766-removebg-preview.png?updatedAt=1749914740291"
+                    alt="Plumbing Work"
+                  />
+                </Group>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Stack px={90}>
+                  <Stack gap="sm" maw={550}>
+                    <Title order={3}>Plumber</Title>
+                    <Text>
+                      Our expert plumbers offer fast solutions for leaks,
+                      blockages, and installations. We work on kitchens,
+                      bathrooms, underground pipes, and water tanks. With the
+                      right tools and training, we get the job done efficiently
+                      every time. Emergency plumbing services are available for
+                      urgent home water issues.
+                    </Text>
+                    <Button
+                      color="orange"
+                      variant="filled"
+                      w={150}
+                      radius="md"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      Book Now
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Grid.Col>
+            </Grid>
+          </Card>
+
+          {/* Appliance Repair */}
+          <Card p="lg" radius="md" bg={"#F0FFF0"} withBorder>
+            <Grid align="center">
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Stack px={90}>
+                  <Stack gap="sm" maw={550}>
+                    <Title order={3}>Appliance Repair</Title>
+                    <Text>
+                      Restore your appliances with our expert repair services at
+                      your doorstep. We fix washing machines, refrigerators,
+                      ovens, and other home appliances. Our technicians diagnose
+                      quickly and provide cost-effective solutions. No need to
+                      replace — we’ll get it running like new in no time.
+                    </Text>
+                    <Button
+                      color="green"
+                      variant="filled"
+                      w={150}
+                      radius="md"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      Book Now
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <Group>
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/18091-removebg-preview.png?updatedAt=1749094082020"
+                    alt="Appliance Repair"
+                  />
+                  <Image
+                    w={300}
+                    src="https://ik.imagekit.io/yzrrrgg3d/professional/42154-removebg-preview.png?updatedAt=1749990094222"
+                    alt="Appliance Technician"
+                  />
+                </Group>
+              </Grid.Col>
+            </Grid>
+          </Card>
         </Stack>
       </Container>
+      <Footer />
     </>
   );
 }

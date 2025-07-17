@@ -67,9 +67,9 @@ function SignIn() {
     if (user?.role === Role.ADMIN) {
       return <Navigate to="/dashboard" />;
     } else if (user?.role === Role.CITY_MANAGER) {
-      return <Navigate to="/dashboard/city-salemans" />;
+      return <Navigate to="/dashboard/city-salesmans" />;
     } else if (user?.role === Role.SALESMAN) {
-      return <Navigate to="/dashboard/professionals" />;
+      return <Navigate to="/dashboard/city-professionals" />;
     } else {
       return <Navigate to="/" />;
     }

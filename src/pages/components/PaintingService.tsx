@@ -16,56 +16,56 @@ import MyNavbar from "../auth/Navbar";
 import BookingForm from "./BookingForm";
 import { useParams } from "react-router-dom";
 
-const cardData = [
+const painterCardData = [
   {
-    title: "AC Installation & Setup",
+    title: "Interior Wall Painting",
     description:
-      "Professional installation of split, window, or central AC systems with optimal placement and energy efficiency in mind.",
-    image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/air_conditioner8-removebg-preview.png?updatedAt=1749621143129",
+      "Transform your rooms with clean, vibrant wall finishes using high-quality, low-odor paints.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/272-removebg-preview.png?updatedAt=1749625004058",
-
-    bg: "#e3f2fd",
-    buttonColor: "dark",
+      "https://ik.imagekit.io/yzrrrgg3d/painter/interior1.png?updatedAt=1750181400000",
+    image2:
+      "https://ik.imagekit.io/yzrrrgg3d/painter/interior2.png?updatedAt=1750181400000",
+    bg: "#e8f5e9", // light green
+    color: "black",
+    buttonColor: "green",
   },
   {
-    title: "AC Repair & Troubleshooting",
+    title: "Exterior House Painting",
     description:
-      "Expert diagnosis and repair of cooling issues, unusual noises, refrigerant leaks, or electrical faults to keep your AC running smoothly.",
+      "Durable and weather-resistant coatings to give your house a long-lasting, fresh look.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/20944212-removebg-preview.png?updatedAt=1749621389364",
+      "https://ik.imagekit.io/yzrrrgg3d/painter/exterior1.png?updatedAt=1750181400000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/4373395-removebg-preview.png?updatedAt=1749624809652", // replace with a relevant repair image if you have one
-    bg: "#b3e5fc",
-    buttonColor: "blue",
+      "https://ik.imagekit.io/yzrrrgg3d/painter/exterior2.png?updatedAt=1750181400000",
+    bg: "#fff3e0", // light orange/peach
+    color: "black",
+    buttonColor: "orange",
   },
   {
-    title: "AC Servicing & Maintenance",
+    title: "Wall Texturing & Decorative Finishes",
     description:
-      "Routine cleaning, filter replacement, and performance checks to extend the life of your AC and maintain indoor air quality.",
+      "Add character to your space with stylish textures like stucco, marble finish, or sponge painting.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/Sandy_Tech-18_Single-01-removebg-preview.png?updatedAt=1749621520919",
+      "https://ik.imagekit.io/yzrrrgg3d/painter/decorative1.png?updatedAt=1750181400000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/7274224-removebg-preview.png?updatedAt=1749625569299", // replace with a maintenance image
-    bg: "#263238",
-    color: "white",
-    buttonColor: "gray",
+      "https://ik.imagekit.io/yzrrrgg3d/painter/decorative2.png?updatedAt=1750181400000",
+    bg: "#fce4ec", // light pink
+    color: "black",
+    buttonColor: "pink",
   },
 ];
 
-export default function ACServices() {
- 
+
+export default function PainterServices() {
+
 
   return (
     <>
       <MyNavbar />
       <Box pos="relative">
         <Image
-          src={
-            "https://thumbs.dreamstime.com/b/blue-couch-sitting-living-room-next-to-wall-modern-pink-pillows-white-mounted-air-conditioner-potted-plant-curtains-360379990.jpg?w=768"
-          }
-          alt="AC Services"
+          src="https://img.freepik.com/free-photo/young-male-working-wood-engraving-workshop_23-2149185460.jpg?uid=R104849183&ga=GA1.1.1955131269.1747397312&semt=ais_hybrid&w=740"
+          alt="Painter Services"
           radius={0}
           fit="cover"
           h={650}
@@ -80,15 +80,10 @@ export default function ACServices() {
           style={{ zIndex: 2 }}
         >
           <Stack>
-            <Title
-              order={3}
-              style={{
-                fontFamily: "serif",
-              }}
-            >
+            <Title order={3} style={{ fontFamily: "serif" }}>
               Book a Service
             </Title>
-            <BookingForm  isHeader={true} type="AC Technician" />
+            <BookingForm  isHeader={true} type="Painter" />
           </Stack>
         </Card>
         <Box
@@ -97,22 +92,22 @@ export default function ACServices() {
           left="10%"
           style={{ transform: "translateY(-50%)", zIndex: 2, color: "white" }}
         >
-          <Title order={1}>Professional AC Services</Title>
+          <Title order={1}>Professional Painting Services</Title>
           <Text size="md" mt="sm">
-            Keep your home cool and comfortable with our expert technicians.
+            Quality paintwork to brighten and protect your space.
           </Text>
 
           <Group gap="md">
-            <Text size="lg">• Reliable</Text>
-            <Text size="lg">• Affordable</Text>
-            <Text size="lg">• 24/7 Support</Text>
+            <Text size="lg">• Neat Finish</Text>
+            <Text size="lg">• Modern Tools</Text>
+            <Text size="lg">• Color Consultancy</Text>
           </Group>
         </Box>
       </Box>
 
       <Container py="md" fluid>
         <Stack gap="md">
-          {cardData.map((card, index) => (
+          {painterCardData.map((card, index) => (
             <Card
               key={index}
               p="lg"
@@ -146,7 +141,7 @@ export default function ACServices() {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Group>
-                    <Image w={300} src={card.image1} alt={card.title} />{" "}
+                    <Image w={300} src={card.image1} alt={card.title} />
                     <Image w={300} src={card.image2} alt={card.title} />
                   </Group>
                 </Grid.Col>

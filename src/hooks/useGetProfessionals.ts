@@ -14,7 +14,7 @@ const useGetProfessionals = (
         city,
         profession,
       }),
-    enabled: !!city,
+   
   });
 
   const professionals = data?.data;

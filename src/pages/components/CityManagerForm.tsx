@@ -12,7 +12,6 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import http from "../../http";
 import { CityOfficer } from "../../http/Api";
 
-
 export function CityManagerForm({
   onClose,
   officer,
@@ -25,15 +24,12 @@ export function CityManagerForm({
       name: officer?.user.fullName || "",
       email: officer?.user.email || "",
       phone: officer?.phone || "",
-      city:officer?.city || ""
-  
+      city: officer?.city || "",
     },
 
     validate: {
       name: (v) => (v.length < 3 ? "Name is too short" : null),
       email: (v) => (/^\S+@\S+$/.test(v) ? null : "Invalid email"),
-      
-
     },
   });
 
@@ -89,7 +85,7 @@ export function CityManagerForm({
             label="Phone Number"
             placeholder="e.g. 03001234567"
             withAsterisk
-           maxLength={11}
+            maxLength={11}
             {...form.getInputProps("phone")}
           />
 

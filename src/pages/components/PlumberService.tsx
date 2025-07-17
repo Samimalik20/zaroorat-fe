@@ -14,55 +14,57 @@ import {
 import Footer from "./Footer";
 import MyNavbar from "../auth/Navbar";
 import BookingForm from "./BookingForm";
+import { useParams } from "react-router-dom";
 
-const cardData = [
+const plumberCardData = [
   {
-    title: "AC Installation & Setup",
+    title: "Pipe Installation & Replacement",
     description:
-      "Professional installation of split, window, or central AC systems with optimal placement and energy efficiency in mind.",
-    image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/air_conditioner8-removebg-preview.png?updatedAt=1749621143129",
+      "Expert setup or replacement of water, gas, or drainage pipes using durable materials for long-lasting plumbing infrastructure.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/272-removebg-preview.png?updatedAt=1749625004058",
-
-    bg: "#e3f2fd",
+      "https://ik.imagekit.io/yzrrrgg3d/professional/4362920-removebg-preview.png?updatedAt=1750149959660",
+    image2:
+      "https://ik.imagekit.io/yzrrrgg3d/professional/5325581-removebg-preview.png?updatedAt=1750149959622",
+    bg: "#e0f2f1", 
+    color: "black",
+    buttonColor: "teal",
+  },
+  {
+    title: "Leak Detection & Repair",
+    description:
+      "Quick identification and repair of water leaks in bathrooms, kitchens, or underground piping to prevent water damage and wastage.",
+    image1:
+      "https://ik.imagekit.io/yzrrrgg3d/plumber/leak-detection1.png?updatedAt=1750178350000",
+    image2:
+      "https://ik.imagekit.io/yzrrrgg3d/plumber/leak-detection2.png?updatedAt=1750178350000",
+    bg: "#b2dfdb",
+    color: "black",
     buttonColor: "dark",
   },
   {
-    title: "AC Repair & Troubleshooting",
+    title: "Drain Cleaning & Maintenance",
     description:
-      "Expert diagnosis and repair of cooling issues, unusual noises, refrigerant leaks, or electrical faults to keep your AC running smoothly.",
+      "Routine drain cleaning to prevent clogs and blockages, ensuring smooth and hygienic water flow in kitchens, bathrooms, and main lines.",
     image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/20944212-removebg-preview.png?updatedAt=1749621389364",
+      "https://ik.imagekit.io/yzrrrgg3d/plumber/drain-cleaning1.png?updatedAt=1750178350000",
     image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/4373395-removebg-preview.png?updatedAt=1749624809652", // replace with a relevant repair image if you have one
-    bg: "#b3e5fc",
-    buttonColor: "blue",
-  },
-  {
-    title: "AC Servicing & Maintenance",
-    description:
-      "Routine cleaning, filter replacement, and performance checks to extend the life of your AC and maintain indoor air quality.",
-    image1:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/Sandy_Tech-18_Single-01-removebg-preview.png?updatedAt=1749621520919",
-    image2:
-      "https://ik.imagekit.io/yzrrrgg3d/professional/7274224-removebg-preview.png?updatedAt=1749625569299", // replace with a maintenance image
-    bg: "#263238",
+      "https://ik.imagekit.io/yzrrrgg3d/plumber/drain-cleaning2.png?updatedAt=1750178350000",
+    bg: "#004d40",
     color: "white",
     buttonColor: "gray",
   },
 ];
 
-export default function Practice() {
+export default function PlumberServices() {
+
+
   return (
     <>
       <MyNavbar />
       <Box pos="relative">
         <Image
-          src={
-            "https://thumbs.dreamstime.com/b/blue-couch-sitting-living-room-next-to-wall-modern-pink-pillows-white-mounted-air-conditioner-potted-plant-curtains-360379990.jpg?w=768"
-          }
-          alt="AC Services"
+          src="https://ik.imagekit.io/yzrrrgg3d/professional/technician-checking-heating-system-boiler-room.jpg?updatedAt=1750149098341"
+          alt="Plumber Services"
           radius={0}
           fit="cover"
           h={650}
@@ -77,15 +79,10 @@ export default function Practice() {
           style={{ zIndex: 2 }}
         >
           <Stack>
-            <Title
-              order={3}
-              style={{
-                fontFamily: "serif",
-              }}
-            >
+            <Title order={3} style={{ fontFamily: "serif" }}>
               Book a Service
             </Title>
-            <BookingForm city="Multan" isHeader={true} />
+            <BookingForm  isHeader={true} type="Plumber" />
           </Stack>
         </Card>
         <Box
@@ -94,22 +91,23 @@ export default function Practice() {
           left="10%"
           style={{ transform: "translateY(-50%)", zIndex: 2, color: "white" }}
         >
-          <Title order={1}>Professional AC Services</Title>
+          <Title order={1}>Professional Plumbing Services</Title>
           <Text size="md" mt="sm">
-            Keep your home cool and comfortable with our expert technicians.
+            Fix leaks, clogs, and installs — fast and reliable plumbing at your
+            doorstep.
           </Text>
 
           <Group gap="md">
-            <Text size="lg">• Reliable</Text>
-            <Text size="lg">• Affordable</Text>
-            <Text size="lg">• 24/7 Support</Text>
+            <Text size="lg">• Certified Experts</Text>
+            <Text size="lg">• Quick Response</Text>
+            <Text size="lg">• Transparent Pricing</Text>
           </Group>
         </Box>
       </Box>
 
       <Container py="md" fluid>
         <Stack gap="md">
-          {cardData.map((card, index) => (
+          {plumberCardData.map((card, index) => (
             <Card
               key={index}
               p="lg"
@@ -143,7 +141,7 @@ export default function Practice() {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6 }}>
                   <Group>
-                    <Image w={300} src={card.image1} alt={card.title} />{" "}
+                    <Image w={300} src={card.image1} alt={card.title} />
                     <Image w={300} src={card.image2} alt={card.title} />
                   </Group>
                 </Grid.Col>
