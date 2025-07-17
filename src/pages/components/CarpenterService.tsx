@@ -83,7 +83,7 @@ export default function CarpenterServices() {
             <Title order={3} style={{ fontFamily: "serif" }}>
               Book a Service
             </Title>
-            <BookingForm city={cityId} isHeader={true} type="Carpenter" />
+            <BookingForm  isHeader={true} type="Carpenter" />
           </Stack>
         </Card>
         <Box

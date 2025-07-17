@@ -11,7 +11,6 @@ import {
   Image,
   SimpleGrid,
   Box,
-  Select,
   Center,
   Badge,
   Divider,
@@ -19,12 +18,7 @@ import {
   ThemeIcon,
   Tooltip,
   Modal,
-  Menu,
-  ActionIcon,
-  Avatar,
-  FLEX_STYLE_PROPS_DATA,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -236,22 +230,22 @@ export default function LandingPage() {
   // inside your component
   const [opened, { open, close }] = useDisclosure(false);
 
-  const { user, logout } = useAuth();
+  const { user} = useAuth();
   const navigate = useNavigate();
-  const form = useForm({
-    initialValues: {
-      city: "",
-    },
-  });
+  // const form = useForm({
+  //   initialValues: {
+  //     city: "",
+  //   },
+  // });
 
-  const handleSubmit = () => {
-    navigate(`/city/${form.values.city}`),
-      {
-        state: {
-          ...form.values,
-        },
-      };
-  };
+  // const handleSubmit = () => {
+  //   navigate(`/city/${form.values.city}`),
+  //     {
+  //       state: {
+  //         ...form.values,
+  //       },
+  //     };
+  // };
   const [
     openedDetailsModal,
     { open: openDetailModal, close: closeDetailModal },
@@ -1225,7 +1219,7 @@ export default function LandingPage() {
       <Drawer
         opened={opened}
         onClose={close}
-        title="Menu"
+        // title="Menu"
         padding="md"
         size="md"
         position="right"

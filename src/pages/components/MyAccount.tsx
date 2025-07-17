@@ -8,8 +8,7 @@ import {
   CheckIcon,
   Divider,
   Text,
-  NavLink,
-  Box,
+  NavLink
 } from "@mantine/core";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";

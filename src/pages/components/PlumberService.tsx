@@ -14,7 +14,7 @@ import {
 import Footer from "./Footer";
 import MyNavbar from "../auth/Navbar";
 import BookingForm from "./BookingForm";
-import { useParams } from "react-router-dom";
+
 
 const plumberCardData = [
   {

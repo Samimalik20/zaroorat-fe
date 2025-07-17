@@ -7,8 +7,6 @@ import {
   Container,
   Image,
   ThemeIcon,
-  List,
-  rem,
   Badge,
   Blockquote,
   Divider,

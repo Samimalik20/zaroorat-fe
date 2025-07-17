@@ -23,15 +23,21 @@ import { useDisclosure } from "@mantine/hooks";
 import SignUpForm from "./SignUpForm";
 import { notifications } from "@mantine/notifications";
 
-export default function BookingForm({
-  isHeader,
- 
-  type,
-}: {
+// Props type
+interface BookingFormProps {
   isHeader?: boolean;
-
   type: string;
-}) {
+}
+
+interface FormValues {
+  description: string;
+  date: string;
+  time: string;
+  contact: string;
+  address: string;
+}
+
+export default function BookingForm({ isHeader, type }: BookingFormProps) {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [recordingURL, setRecordingURL] = useState<string>("");
@@ -48,7 +54,7 @@ export default function BookingForm({
     libraries: ["places"],
   });
 
-  const form = useForm({
+  const form = useForm<FormValues>({
     initialValues: {
       description: "",
       date: "",
@@ -75,7 +81,10 @@ export default function BookingForm({
 
     const fileArray = Array.from(files);
     setImages(fileArray);
-    const previewUrls = fileArray.map((file) => URL.createObjectURL(file));
+
+    const previewUrls = fileArray.map((file) =>
+      URL.createObjectURL(file)
+    );
     setPreviews(previewUrls);
     resetRef.current?.();
   };
@@ -90,16 +99,17 @@ export default function BookingForm({
     setLoading(true);
     if (!user) {
       open();
+      setLoading(false);
       return;
     }
-    const formData = new FormData();
 
-    formData.append("description", String(form.values.description || ""));
-    formData.append("date", String(form.values.date || ""));
-    formData.append("time", String(form.values.time || ""));
-    formData.append("address", String(form.values.address || ""));
-    formData.append("contact", String(form.values.contact || ""));
-    formData.append("city", 'Multan');
+    const formData = new FormData();
+    formData.append("description", form.values.description || "");
+    formData.append("date", form.values.date || "");
+    formData.append("time", form.values.time || "");
+    formData.append("address", form.values.address || "");
+    formData.append("contact", form.values.contact || "");
+    formData.append("city", "Multan");
     formData.append("type", type);
 
     if (user?._id) {
@@ -113,9 +123,14 @@ export default function BookingForm({
     }
 
     if (recordingURL) {
-      const audioBlob = await fetch(recordingURL).then((res) => res.blob());
-      formData.append("audio", audioBlob, "recording.webm");
+      try {
+        const audioBlob = await fetch(recordingURL).then((res) => res.blob());
+        formData.append("audio", audioBlob, "recording.webm");
+      } catch (error) {
+        console.error("Failed to fetch audio blob", error);
+      }
     }
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}bookings`,
@@ -132,7 +147,6 @@ export default function BookingForm({
           message: "Booking submitted successfully.",
           color: "green",
         });
-        setLoading(false);
       }
     } catch (error: any) {
       notifications.show({
@@ -143,7 +157,6 @@ export default function BookingForm({
           "Something went wrong.",
         color: "red",
       });
-      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -158,10 +171,9 @@ export default function BookingForm({
     setLoadingLocation(true);
 
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
+      (position) => {
         const { latitude, longitude } = position.coords;
 
-        // Reverse geocoding using Google Maps API (assuming map is loaded)
         const geocoder = new window.google.maps.Geocoder();
         const latLng = { lat: latitude, lng: longitude };
 
@@ -170,13 +182,6 @@ export default function BookingForm({
             const address = results[0].formatted_address;
 
             form.setFieldValue("address", address);
-            if (inputRef.current?.getBounds) {
-              const input = inputRef.current;
-              const inputElement = document.querySelector(
-                "input[name='address']"
-              );
-              if (inputElement) inputElement.value = address;
-            }
           } else {
             alert("Unable to retrieve address.");
           }
@@ -211,9 +216,8 @@ export default function BookingForm({
 
             {isLoaded && (
               <>
-             
                 <StandaloneSearchBox
-                  onLoad={(ref: google.maps.places.SearchBox) => {
+                  onLoad={(ref) => {
                     inputRef.current = ref;
                   }}
                   onPlacesChanged={handlePlacesChanged}
@@ -225,7 +229,7 @@ export default function BookingForm({
                     {...form.getInputProps("address")}
                   />
                 </StandaloneSearchBox>
-                   <Button
+                <Button
                   variant="light"
                   onClick={handleUseCurrentLocation}
                   loading={loadingLocation}
@@ -244,6 +248,7 @@ export default function BookingForm({
               {...form.getInputProps("contact")}
             />
 
+            {/* Description and attachments */}
             <Stack
               gap={0}
               p={0}
@@ -256,11 +261,8 @@ export default function BookingForm({
                 autosize
                 {...form.getInputProps("description")}
                 styles={{
-                  input: {
-                    border: "0px",
-                  },
+                  input: { border: "0px" },
                 }}
-                p={0}
               />
               <Group justify="flex-end">
                 <Group gap={4}>
@@ -323,7 +325,7 @@ export default function BookingForm({
               </Box>
             )}
 
-            {/* Audio preview if recorded */}
+            {/* Audio preview */}
             {recordingURL && (
               <Card withBorder mt="sm" pos="relative" padding="sm">
                 <ActionIcon
@@ -333,7 +335,7 @@ export default function BookingForm({
                   top={4}
                   right={4}
                   onClick={() => {
-                    URL.revokeObjectURL(recordingURL); // cleanup
+                    URL.revokeObjectURL(recordingURL);
                     setRecordingURL("");
                   }}
                 >

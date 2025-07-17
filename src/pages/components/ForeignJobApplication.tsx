@@ -25,6 +25,7 @@ import { useLocation } from "react-router-dom";
 export default function ForeignJobOnboarding() {
   const {state} = useLocation()
   const jobId=state?.jobId
+  console.log(jobId)
   const jobTitle = state?.title
   console.log(state,'state')
   return (
