@@ -10,16 +10,10 @@ import {
   Badge,
   Blockquote,
   Divider,
-  Group,
+
   Card,
+  Flex,
 } from "@mantine/core";
-// import {
-//   IconCheck,
-//   IconBolt,
-//   IconUsersGroup,
-//   IconCash,
-//   IconQuote,
-// } from "@tabler/icons-react";
 import Footer from "./Footer";
 import MyNavbar from "../auth/Navbar";
 import ProfessionalForm from "./ProfessionalForm";
@@ -40,8 +34,7 @@ export default function ProfessionalOnboarding() {
           withBorder
           style={{ backgroundColor: "#f9fafb" }}
         >
-          <Grid gutter="xl" align="start">
-            {/* Left Column - Rich Content */}
+          <Grid gutter="xl">
             <Grid.Col span={{ base: 12, md: 6 }}>
               <Stack gap="lg">
                 <Badge
@@ -67,62 +60,54 @@ export default function ProfessionalOnboarding() {
                   src="https://ik.imagekit.io/yzrrrgg3d/professional/hero_image_desktop-08e3eaac39db4404c62da49ee7c4cd83.webp?updatedAt=1749908870217"
                   alt="Professional Illustration"
                   fit="contain"
-                  h={200}
                   radius="md"
+                  style={{ maxWidth: "100%", height: "auto" }}
                 />
 
                 <Divider label="Why Join Us?" labelPosition="center" />
 
-                <Group grow>
-                  <Card withBorder radius="md" p="md" shadow="xs">
-                    <ThemeIcon
-                      color="green"
-                      variant="light"
-                      radius="xl"
-                      size="lg"
-                    >
-                      <IconUsersGroup size={20} />
-                    </ThemeIcon>
-                    <Text fw={600} mt="sm">
-                      Verified Clients
-                    </Text>
-                    <Text size="xs" c="dimmed">
-                      We connect you only with real customers near you.
-                    </Text>
-                  </Card>
-                  <Card withBorder radius="md" p="md" shadow="xs">
-                    <ThemeIcon
-                      color="yellow"
-                      variant="light"
-                      radius="xl"
-                      size="lg"
-                    >
-                      <IconCash size={20} />
-                    </ThemeIcon>
-                    <Text fw={600} mt="sm">
-                      Instant Payments
-                    </Text>
-                    <Text size="xs" c="dimmed">
-                      Payments are secure and timely.
-                    </Text>
-                  </Card>
-                  <Card withBorder radius="md" p="md" shadow="xs">
-                    <ThemeIcon
-                      color="blue"
-                      variant="light"
-                      radius="xl"
-                      size="lg"
-                    >
-                      <IconBadge size={20} />
-                    </ThemeIcon>
-                    <Text fw={600} mt="sm">
-                      Fast Bookings
-                    </Text>
-                    <Text size="xs" c="dimmed">
-                      Start receiving jobs right after approval.
-                    </Text>
-                  </Card>
-                </Group>
+                {/* Cards in responsive Flex */}
+                <Flex
+                  direction={{ base: "column", sm: "row" }}
+                  gap="md"
+                  justify="center"
+                >
+                  {[{
+                    icon: <IconUsersGroup size={20} />,
+                    color: "green",
+                    title: "Verified Clients",
+                    description: "We connect you only with real customers near you."
+                  },
+                  {
+                    icon: <IconCash size={20} />,
+                    color: "yellow",
+                    title: "Instant Payments",
+                    description: "Payments are secure and timely."
+                  },
+                  {
+                    icon: <IconBadge size={20} />,
+                    color: "blue",
+                    title: "Fast Bookings",
+                    description: "Start receiving jobs right after approval."
+                  }].map((item, index) => (
+                    <Card key={index} withBorder radius="md" p="md" shadow="xs" style={{ flex: 1 }}>
+                      <ThemeIcon
+                        color={item.color}
+                        variant="light"
+                        radius="xl"
+                        size="lg"
+                      >
+                        {item.icon}
+                      </ThemeIcon>
+                      <Text fw={600} mt="sm">
+                        {item.title}
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        {item.description}
+                      </Text>
+                    </Card>
+                  ))}
+                </Flex>
 
                 <Divider my="md" />
 
@@ -154,7 +139,6 @@ export default function ProfessionalOnboarding() {
               </Stack>
             </Grid.Col>
 
-            {/* Right Column - Form */}
             <Grid.Col span={{ base: 12, md: 6 }}>
               <Paper
                 p="xl"
@@ -165,7 +149,7 @@ export default function ProfessionalOnboarding() {
                 <Title order={3} mb="md" ta="center">
                   Onboarding Form
                 </Title>
-                <ProfessionalForm onClose={() => ""} isProfessional={true}/>
+                <ProfessionalForm onClose={() => ""} isProfessional={true} />
               </Paper>
             </Grid.Col>
           </Grid>

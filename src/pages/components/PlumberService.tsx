@@ -11,10 +11,10 @@ import {
   Overlay,
   Group,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import Footer from "./Footer";
 import MyNavbar from "../auth/Navbar";
 import BookingForm from "./BookingForm";
-
 
 const plumberCardData = [
   {
@@ -25,7 +25,7 @@ const plumberCardData = [
       "https://ik.imagekit.io/yzrrrgg3d/professional/4362920-removebg-preview.png?updatedAt=1750149959660",
     image2:
       "https://ik.imagekit.io/yzrrrgg3d/professional/5325581-removebg-preview.png?updatedAt=1750149959622",
-    bg: "#e0f2f1", 
+    bg: "#e0f2f1",
     color: "black",
     buttonColor: "teal",
   },
@@ -56,56 +56,65 @@ const plumberCardData = [
 ];
 
 export default function PlumberServices() {
-
+  const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
   return (
     <>
       <MyNavbar />
+
       <Box pos="relative">
-        <Image
-          src="https://ik.imagekit.io/yzrrrgg3d/professional/technician-checking-heating-system-boiler-room.jpg?updatedAt=1750149098341"
-          alt="Plumber Services"
-          radius={0}
-          fit="cover"
-          h={650}
-        />
-        <Overlay color="#000" backgroundOpacity={0.8} blur={1} zIndex={1} />
+        {isLargeScreen && (
+          <>
+            <Image
+              src="https://ik.imagekit.io/yzrrrgg3d/professional/technician-checking-heating-system-boiler-room.jpg?updatedAt=1750149098341"
+              alt="Plumber Services"
+              radius={0}
+              fit="cover"
+              h={650}
+            />
+            <Overlay color="#000" backgroundOpacity={0.8} blur={1} zIndex={1} />
+            <Box
+              pos="absolute"
+              top="50%"
+              left="5%"
+              style={{ transform: "translateY(-50%)", zIndex: 2 }}
+              c="white"
+              maw="40%"
+            >
+              <Title order={1}>Professional Plumbing Services</Title>
+              <Text size="md" mt="sm">
+                Fix leaks, clogs, and installs — fast and reliable plumbing at your
+                doorstep.
+              </Text>
+              <Group gap="md" wrap="wrap" mt="md">
+                <Text size="lg">• Certified Experts</Text>
+                <Text size="lg">• Quick Response</Text>
+                <Text size="lg">• Transparent Pricing</Text>
+              </Group>
+            </Box>
+          </>
+        )}
+
         <Card
-          pos="absolute"
-          top="5%"
-          right="10%"
-          bg={"white"}
-          w={400}
+          pos={isLargeScreen ? "absolute" : "static"}
+          top={isLargeScreen ? "5%" : undefined}
+          right={isLargeScreen ? "5%" : undefined}
+          w={{ base: "90%", sm: 400 }}
+          mx={isLargeScreen ? 0 : "auto"}
+          my={isLargeScreen ? 0 : "md"}
+          bg="white"
           style={{ zIndex: 2 }}
         >
           <Stack>
             <Title order={3} style={{ fontFamily: "serif" }}>
               Book a Service
             </Title>
-            <BookingForm  isHeader={true} type="Plumber" />
+            <BookingForm isHeader={true} type="Plumber" />
           </Stack>
         </Card>
-        <Box
-          pos="absolute"
-          top="50%"
-          left="10%"
-          style={{ transform: "translateY(-50%)", zIndex: 2, color: "white" }}
-        >
-          <Title order={1}>Professional Plumbing Services</Title>
-          <Text size="md" mt="sm">
-            Fix leaks, clogs, and installs — fast and reliable plumbing at your
-            doorstep.
-          </Text>
-
-          <Group gap="md">
-            <Text size="lg">• Certified Experts</Text>
-            <Text size="lg">• Quick Response</Text>
-            <Text size="lg">• Transparent Pricing</Text>
-          </Group>
-        </Box>
       </Box>
 
-      <Container py="md" fluid>
+      <Container py={{ base: "sm", md: "md" }} fluid>
         <Stack gap="md">
           {plumberCardData.map((card, index) => (
             <Card
@@ -117,18 +126,18 @@ export default function PlumberServices() {
             >
               <Grid align="center">
                 <Grid.Col span={{ base: 12, md: 6 }}>
-                  <Stack px={90}>
+                  <Stack px={{ base: "sm", md: "xl" }}>
                     <Stack gap="sm" maw={400}>
-                      <Title order={3} style={{ color: card.color || "black" }}>
+                      <Title order={3} c={card.color || "black"}>
                         {card.title}
                       </Title>
-                      <Text style={{ color: card.color || "black" }}>
+                      <Text c={card.color || "black"}>
                         {card.description}
                       </Text>
                       <Button
                         color={card.buttonColor}
                         variant="filled"
-                        w={150}
+                        w={{ base: "100%", sm: 150 }}
                         radius="md"
                         onClick={() => {
                           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -139,10 +148,19 @@ export default function PlumberServices() {
                     </Stack>
                   </Stack>
                 </Grid.Col>
+
                 <Grid.Col span={{ base: 12, md: 6 }}>
-                  <Group>
-                    <Image w={300} src={card.image1} alt={card.title} />
-                    <Image w={300} src={card.image2} alt={card.title} />
+                  <Group justify="center" wrap="wrap" gap="md">
+                    <Image
+                      w={{ base: "100%", sm: 250 }}
+                      src={card.image1}
+                      alt={card.title}
+                    />
+                    <Image
+                      w={{ base: "100%", sm: 250 }}
+                      src={card.image2}
+                      alt={card.title}
+                    />
                   </Group>
                 </Grid.Col>
               </Grid>
@@ -150,6 +168,7 @@ export default function PlumberServices() {
           ))}
         </Stack>
       </Container>
+
       <Footer />
     </>
   );
