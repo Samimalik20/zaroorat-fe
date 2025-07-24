@@ -9,6 +9,8 @@ import {
   Button,
   Card,
   Modal,
+  Select,
+  ScrollArea,
 } from "@mantine/core";
 import { useRef, useState } from "react";
 import AudioRecorder from "./audioRecording";
@@ -35,6 +37,7 @@ interface FormValues {
   time: string;
   contact: string;
   address: string;
+  city: string;
 }
 
 export default function BookingForm({ isHeader, type }: BookingFormProps) {
@@ -61,6 +64,7 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
       time: "",
       contact: "",
       address: "",
+      city: "",
     },
   });
 
@@ -82,9 +86,7 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
     const fileArray = Array.from(files);
     setImages(fileArray);
 
-    const previewUrls = fileArray.map((file) =>
-      URL.createObjectURL(file)
-    );
+    const previewUrls = fileArray.map((file) => URL.createObjectURL(file));
     setPreviews(previewUrls);
     resetRef.current?.();
   };
@@ -109,7 +111,7 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
     formData.append("time", form.values.time || "");
     formData.append("address", form.values.address || "");
     formData.append("contact", form.values.contact || "");
-    formData.append("city", "Multan");
+    formData.append("city", form.values.city || "");
     formData.append("type", type);
 
     if (user?._id) {
@@ -144,7 +146,7 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
         setRecordingURL("");
         notifications.show({
           title: "Success",
-          message: "Booking submitted successfully.",
+          message: "Booking submitted successfully.You will be contacted shortly!",
           color: "green",
         });
       }
@@ -198,62 +200,81 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
 
   return (
     <>
-      <Box p="xs" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack>
-            <DateInput
-              label="Preferred Date"
-              placeholder="e.g. 30 May, 2025"
-              {...form.getInputProps("date")}
-              size={isHeader ? "sm" : "md"}
-            />
-            <TimeInput
-              label="Preferred Time"
-              placeholder="e.g. 1:00 PM"
-              size={isHeader ? "sm" : "md"}
-              {...form.getInputProps("time")}
-            />
+      <ScrollArea
+        offsetScrollbars
+        type="auto" // or "scroll" to always show scrollbars
+        scrollbarSize={4}
+        style={{
+          maxHeight: isHeader ? 500 : 470,
+          overflowX: "auto",
+          overflowY: "auto", // Enable vertical scrolling
+          paddingTop: 6,
+        }}
+      >
+        <Box p="xs" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <Stack gap="xs">
+              <Group grow>
+                <DateInput
+                  label="Date"
+                  placeholder="30 May, 2025"
+                  size={isHeader ? "sm" : "md"}
+                  {...form.getInputProps("date")}
+                />
+                <TimeInput
+                  label="Time"
+                  placeholder="1:00 PM"
+                  size={isHeader ? "sm" : "md"}
+                  {...form.getInputProps("time")}
+                />
+              </Group>
 
-            {isLoaded && (
-              <>
-                <StandaloneSearchBox
-                  onLoad={(ref) => {
-                    inputRef.current = ref;
-                  }}
-                  onPlacesChanged={handlePlacesChanged}
-                >
-                  <TextInput
-                    size={isHeader ? "sm" : "md"}
-                    label="Address"
-                    placeholder="Search Address"
-                    {...form.getInputProps("address")}
-                  />
-                </StandaloneSearchBox>
-                <Button
-                  variant="light"
-                  onClick={handleUseCurrentLocation}
-                  loading={loadingLocation}
-                  size={isHeader ? "xs" : "sm"}
-                >
-                  Use Current Location
-                </Button>
-              </>
-            )}
+              {isLoaded && (
+                <>
+                  <StandaloneSearchBox
+                    onLoad={(ref) => (inputRef.current = ref)}
+                    onPlacesChanged={handlePlacesChanged}
+                  >
+                    <TextInput
+                      size={isHeader ? "sm" : "md"}
+                      label="Address"
+                      placeholder="Search Address"
+                      {...form.getInputProps("address")}
+                    />
+                  </StandaloneSearchBox>
+                  <Button
+                    variant="light"
+                    onClick={handleUseCurrentLocation}
+                    loading={loadingLocation}
+                    size={isHeader ? "xs" : "sm"}
+                  >
+                    Use Current Location
+                  </Button>
+                </>
+              )}
 
-            <TextInput
-              label="Contact Number"
-              placeholder="e.g. 03001234567"
-              type="tel"
-              size={isHeader ? "sm" : "md"}
-              {...form.getInputProps("contact")}
-            />
+              <Select
+                label="City"
+                placeholder="Multan"
+                size={isHeader ? "sm" : "md"}
+                data={[
+                  "Multan",
+                  "Lahore",
+                  "Karachi",
+                  "Islamabad",
+                  "Faisalabad",
+                  "Rawalpindi",
+                ]}
+                {...form.getInputProps("city")}
+              />
+              <TextInput
+                label="Contact"
+                placeholder="03001234567"
+                type="tel"
+                size={isHeader ? "sm" : "md"}
+                {...form.getInputProps("contact")}
+              />
 
-            {/* Description and attachments */}
-            <Stack
-              gap={0}
-              p={0}
-              style={{ border: "1px solid #ccc", borderRadius: 8 }}
-            >
               <Textarea
                 size={isHeader ? "sm" : "md"}
                 placeholder="Briefly explain the issue"
@@ -261,48 +282,47 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
                 autosize
                 {...form.getInputProps("description")}
                 styles={{
-                  input: { border: "0px" },
+                  input: { border: "1px solid #ccc", borderRadius: 8 },
                 }}
               />
-              <Group justify="flex-end">
-                <Group gap={4}>
-                  <FileButton
-                    onChange={handleFileChange}
-                    accept="image/*"
-                    multiple
-                    resetRef={resetRef}
-                  >
-                    {(props) => (
-                      <ActionIcon variant="subtle" {...props}>
-                        <IconImage />
-                      </ActionIcon>
-                    )}
-                  </FileButton>
 
-                  <AudioRecorder
-                    onRecordingComplete={(url: string) => setRecordingURL(url)}
-                  />
-                </Group>
-              </Group>
-            </Stack>
-
-            {/* Image Previews */}
-            {previews.length > 0 && (
-              <Box>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "10px",
-                    marginTop: "10px",
-                    flexWrap: "wrap",
-                  }}
+              <Group gap="xs" justify="space-between">
+                <FileButton
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  multiple
+                  resetRef={resetRef}
                 >
+                  {(props) => (
+                    <Button
+                      variant="subtle"
+                      size={isHeader ? "xs" : "sm"}
+                      {...props}
+                    >
+                      Upload Image
+                    </Button>
+                  )}
+                </FileButton>
+
+                <AudioRecorder
+                  onRecordingComplete={(url: string) => setRecordingURL(url)}
+                />
+              </Group>
+
+              {/* ✅ Image Previews with ScrollArea */}
+              {previews.length > 0 && (
+                <Group gap={8} wrap="nowrap">
                   {previews.map((src, index) => (
-                    <Card key={index} withBorder pos={"relative"}>
+                    <Card
+                      key={index}
+                      withBorder
+                      pos="relative"
+                      style={{ width: 75, height: 75 }}
+                    >
                       <ActionIcon
                         variant="subtle"
-                        size={"xs"}
-                        pos={"absolute"}
+                        size="xs"
+                        pos="absolute"
                         top={1}
                         right={1}
                         onClick={() => onRemoveImage(index)}
@@ -313,44 +333,52 @@ export default function BookingForm({ isHeader, type }: BookingFormProps) {
                         src={src}
                         alt={`preview-${index}`}
                         style={{
-                          width: 50,
-                          height: 50,
+                          width: "100%",
+                          height: "100%",
                           objectFit: "cover",
                           borderRadius: 8,
                         }}
                       />
                     </Card>
                   ))}
-                </div>
-              </Box>
-            )}
+                </Group>
+              )}
 
-            {/* Audio preview */}
-            {recordingURL && (
-              <Card withBorder mt="sm" pos="relative" padding="sm">
-                <ActionIcon
-                  variant="subtle"
-                  size="xs"
-                  pos="absolute"
-                  top={4}
-                  right={4}
-                  onClick={() => {
-                    URL.revokeObjectURL(recordingURL);
-                    setRecordingURL("");
-                  }}
-                >
-                  <IconX color="red" size={12} />
-                </ActionIcon>
-                <audio controls src={recordingURL} style={{ width: "100%" }} />
-              </Card>
-            )}
+              {/* Audio Preview */}
+              {recordingURL && (
+                <Card withBorder padding="xs" pos="relative">
+                  <ActionIcon
+                    variant="subtle"
+                    size="xs"
+                    pos="absolute"
+                    top={4}
+                    right={4}
+                    onClick={() => {
+                      URL.revokeObjectURL(recordingURL);
+                      setRecordingURL("");
+                    }}
+                  >
+                    <IconX color="red" size={12} />
+                  </ActionIcon>
+                  <audio
+                    controls
+                    src={recordingURL}
+                    style={{ width: "100%" }}
+                  />
+                </Card>
+              )}
 
-            <Button type="submit" loading={loading}>
-              Submit
-            </Button>
-          </Stack>
-        </form>
-      </Box>
+              <Button
+                type="submit"
+                loading={loading}
+                size={isHeader ? "sm" : "md"}
+              >
+                Submit
+              </Button>
+            </Stack>
+          </form>
+        </Box>
+      </ScrollArea>
 
       <Modal opened={opened} onClose={close}>
         <SignUpForm close={close} />
